@@ -8,7 +8,6 @@ from arua_companion.themes import can_write, find_arua_themes, replace_block
 from conftest import LISTS, PROFILES, lua_parses
 
 
-@pytest.mark.xfail(strict=True, reason='theme settings blocks land in Task 6')
 def test_save_writes_every_arua_theme(fake_game):
     r = save_all(fake_game, Settings(marker='green', group_rows=2), LISTS, PROFILES)
     assert r.error is None and r.themes == ['arua_dark', 'arua_ice'] and r.skipped == []

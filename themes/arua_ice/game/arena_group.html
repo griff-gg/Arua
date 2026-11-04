@@ -153,6 +153,9 @@
         </style>
         <script>
 local io = io or { open = function() return nil, 'file access is not available in this client' end, lines = function() return function() return nil end end }
+-- ARUA-SETTINGS-BEGIN (written by Arua Companion; do not edit by hand)
+local ARUA_SETTINGS = nil
+-- ARUA-SETTINGS-END
 -- Group Options > Buff rows: 1 / 2 / 3 rows of status icons per member card.
 -- Saved in sp_addons.txt as group_rows=N (default 3).
 pcall(function()
@@ -269,6 +272,10 @@ pcall(function()
         end
     end
     local t = read_all()
+    if ARUA_SETTINGS then
+        t.group_rows = tostring(ARUA_SETTINGS.group_rows or 3)
+        t.group_layout = tostring(ARUA_SETTINGS.group_columns or 0)
+    end
     local n = tonumber(t.group_rows or '') or 3
     if n ~= 1 and n ~= 2 then n = 3 end
     apply(n)
@@ -315,6 +322,9 @@ end)
         <link type="text/rcss" href="../styles/ice_class.css" />
         <script>
 local io = io or { open = function() return nil, 'file access is not available in this client' end, lines = function() return function() return nil end end }
+-- ARUA-SETTINGS-BEGIN (written by Arua Companion; do not edit by hand)
+local ARUA_SETTINGS = nil
+-- ARUA-SETTINGS-END
 -- Experimental (Options > Add-ons): class badge next to group members. Classes come from the
 -- Group Manager list (rows tagged gm-name / gm-job) and are remembered in sp_clan_classes.txt.
 pcall(function()
@@ -517,6 +527,10 @@ pcall(function()
             CLS_APPLY()
         end)
     end)
+    if ARUA_SETTINGS and ARUA_SETTINGS.class_icons == false then
+        local b = doc:GetElementById('arena-group')
+        if b then b:SetClass('ci-0', true) end
+    end
     enabled = read_flag()
     if enabled then start() end
 end)

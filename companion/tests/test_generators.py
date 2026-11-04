@@ -5,7 +5,6 @@ from arua_companion.settings import Settings, load_settings, save_settings
 from conftest import THEME
 
 
-@pytest.mark.xfail(strict=True, reason='theme defaults land in Task 6')
 def test_defaults_reproduce_current_theme_files():
     s = Settings()
     assert world_ui_css(s) == (THEME / 'styles/spritesheet_world_ui.css').read_text(encoding='utf-8')

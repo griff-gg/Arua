@@ -377,6 +377,9 @@
         </style>
         <script>
 local io = io or { open = function() return nil, 'file access is not available in this client' end, lines = function() return function() return nil end end }
+-- ARUA-SETTINGS-BEGIN (written by Arua Companion; do not edit by hand)
+local ARUA_SETTINGS = nil
+-- ARUA-SETTINGS-END
 -- Minimap size: the dot grip (bottom left) sets the window width, growing to the left; the map view becomes a square of
 -- (width - 30dp), 190..300dp. The game centres the map for a 190dp view, so the map layer is
 -- shifted by half the extra size. Size is remembered as minimap_size in sp_addons.txt.
@@ -439,7 +442,7 @@ pcall(function()
         if not pw or pw == 0 then return false end
         return set_view(doc.offset_width / (pw / 100))
     end
-    saved = read_saved()
+    saved = read_saved() or (ARUA_SETTINGS and ARUA_SETTINGS.minimap_size)
     if saved then
         saved = math.max(BASE, math.min(MAXV, saved))
         doc.style.width = (saved + 30) .. 'dp'

@@ -1,6 +1,6 @@
 /* Nameplate bars: the native nameplate layer draws these sprite NAMES directly,
  * so they are remapped onto the ice art (only linked from character_nameplates.html).
- * Party Bars: normal. */
+ * Party Bars: normal (Arua Companion). */
 @spritesheet ice-nameplate
 {
     src: ../imgs/iceinv.dds;
