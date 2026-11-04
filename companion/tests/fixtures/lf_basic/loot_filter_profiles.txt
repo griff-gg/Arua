@@ -1,0 +1,15 @@
+active=Profile A
+[Profile A]
+yellow=Pink Powder, Knight's Sword
+blue=Salt & Pepper <Rare>
+purple=Épée Longue
+red=
+green=Golden Feather
+rainbow=
+[Farm B]
+yellow=
+blue=
+purple=Blue Stone
+red=
+green=
+rainbow=Rainbow Gem
