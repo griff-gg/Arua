@@ -1,5 +1,14 @@
 # Arua changelog
 
+## 0.2.0 – 2026-11-05
+
+- New: **Arua Companion**, a settings app in the ROSE Online folder (`Arua Companion\Arua Companion.exe`):
+  loot lists with item search (all game item names), colours and profiles; target marker colour; drop name
+  box / outline / opacity; group buff rows, columns, class icons, minimap size and Party Bars defaults.
+  Saves into every installed Arua theme (with backups); Ctrl+F5 in game reloads the UI.
+- Themes: settings blocks for the group window and minimap, and a drop name style sheet, filled in by
+  the Companion.
+
 ## 0.1.0 – 2026-11-04
 
 First release for the ROSE Online patch of 3 November 2026.

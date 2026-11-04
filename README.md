@@ -15,12 +15,30 @@ Made by **griff_gg**. Built for the ROSE Online patch of **3 November 2026**.
    them in place the default theme breaks after the patch.
 3. Copy the three folders from `themes\` into `ROSE Online\data\ui\themes\`:
    `arua_ice`, `arua_dark`, `arua_midnight`.
-4. Copy the two files from `game-folder\` into the `ROSE Online` folder itself (the one with
-   `trose.exe`): `Arua Loot Filter.bat` and `arua_loot_filter.ps1`.
+4. Copy everything in `game-folder\` into the `ROSE Online` folder itself (the one with `trose.exe`):
+   the `Arua Companion` folder, `Arua Loot Filter.bat` and `arua_loot_filter.ps1`.
 5. Start the game, open **Options > Interface > Theme** and pick **Arua Ice**, **Arua Dark** or
    **Arua Midnight**.
 
 The game remembers the theme. To go back to the original look, pick **ROSE**.
+
+## Arua Companion
+
+Since the 3 November 2026 patch the game's UI can no longer save settings, so Arua has a small
+settings app: **ROSE Online\Arua Companion\Arua Companion.exe**. Open it (outside the game or while
+it runs), change what you like and press **Save**. Then restart the game, or press **Ctrl+F5** in game
+to reload the UI.
+
+- **Loot filter**: search all item names, click a colour dot to add an item to that list, remove names,
+  profiles, Only show filtered drops / Dim other drops, filtered name size.
+- **Markers & drops**: target marker colour (red / blue / green); drop names that are not in your lists:
+  dark box behind the name, black outline, opacity 100 / 75 / 50 %.
+- **Group & minimap**: buff rows, columns, class icons, minimap size, Party Bars (normal / faded).
+
+It writes into every installed Arua theme and keeps a copy of each file it changes in
+`ROSE Onlinerua_companion_backup\`. The first time, Windows may ask for permission to write into the
+game folder. **Update item list** downloads the newest item list from this repository (only when you
+click it); the app never touches the running game.
 
 ## Loot filter
 
@@ -28,8 +46,8 @@ Listed drops get a coloured glow, a bigger name and a light beam. Six lists, by 
 Purple, Red, Green and Rainbow (the rarer colour wins if a name is in two lists).
 
 - **Your lists** live in `loot_filter.txt` in the ROSE Online folder (and profiles in
-  `loot_filter_profiles.txt`). Edit them in Notepad, then double-click **Arua Loot Filter.bat** and
-  restart the game. The first time, it creates `loot_filter.txt` with short instructions.
+  `loot_filter_profiles.txt`). Easiest: edit them in the **Arua Companion**. Without the app: edit them in
+  Notepad, then double-click **Arua Loot Filter.bat** and restart the game. The first time, it creates `loot_filter.txt` with short instructions.
   If the game is in Program Files, Windows asks for permission to write there.
 - **In game** (Options > Loot Filter) you can switch profiles, Dim other drops, Only show filtered
   drops and the name size at once. You can also add names there: they work right away, but only for
@@ -56,15 +74,17 @@ Purple, Red, Green and Rainbow (the rarer colour wins if a name is in two lists)
 The 3 November 2026 patch removed file access from UI scripts, so the UI can no longer save settings
 itself:
 
-- Group buff rows / columns, class icons on/off and the minimap size reset when you restart.
-- Loot filter lists are saved with the helper (see above), not from the Options window.
+- Group buff rows / columns, class icons on/off and the minimap size changed in game reset when you
+  restart; set your defaults in the **Arua Companion**.
+- Loot filter lists are saved with the Companion or the helper (see above), not from the Options window.
 - The element icon and DPS meter on the target bar are always on.
 
 ## Files
 
 - `themes\arua_ice`, `themes\arua_dark`, `themes\arua_midnight`: the three themes. Each is a complete
   theme folder, as the game requires.
-- `game-folder\`: the loot filter helper (PowerShell, built into Windows; nothing to install).
+- `game-folder\`: the Arua Companion app and the loot filter helper (PowerShell, built into Windows).
+- `companion\`: the Companion's source (Python + pywebview), tests and the item-name list (`data\items.json`).
 
 ## Credits
 
