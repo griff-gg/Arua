@@ -1,0 +1,53 @@
+details {
+    display: block;
+}
+
+details > summary {
+    cursor: hand;
+    display: block;
+}
+
+details > summary:hover {
+    color: yellow;
+}
+
+details > summary > summary-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+details > summary > summary-marker {
+    width: 24dp;
+    height: 26dp;
+    decorator: image(plus-button-n);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+details > summary[disabled] > summary-marker {
+    decorator: image(plus-button-d);
+}
+
+details > summary:not(summary[disabled]):hover > summary-marker {
+    decorator: image(plus-button-h);
+}
+
+details > summary:not(summary[disabled]):active > summary-marker {
+    decorator: image(plus-button-a);
+}
+
+details[open] > summary > summary-marker {
+    decorator: image(minus-button-n);
+}
+
+details[open] > summary[disabled] > summary-marker {
+    decorator: image(minus-button-d);
+}
+
+details[open] > summary:not(summary[disabled]):hover > summary-marker {
+    decorator: image(minus-button-h);
+}
+
+details[open] > summary:not(summary[disabled]):active > summary-marker {
+    decorator: image(minus-button-a);
+}

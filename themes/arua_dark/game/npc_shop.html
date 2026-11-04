@@ -1,0 +1,108 @@
+<rml>
+    <head>
+        <title>NPC shop</title>
+        <link type="text/template" href="../templates/window-fixed-size.html" />
+        <link type="text/rcss" href="../styles/spritesheet_itemicon.css" />
+        <link type="text/rcss" href="../styles/spritesheet_socketgem.css" />
+        <link type="text/rcss" href="../styles/item_slot.css" />
+        <link type="text/rcss" href="../styles/components.css" />
+        <link type="text/rcss" href="../styles/ice_sprites.css" />
+        <link type="text/rcss" href="../styles/ice_window.css" />
+        <style>
+            body { width: 390dp; max-width: 94vw; }
+            .ice-box.shop-box { margin-top: 2dp; }
+            .shop-tabs-pair > .ui-tab { flex: 0 1 auto; }
+            .shop-tab-label { display: block; flex: 1; min-width: 0; height: 24dp; line-height: 24dp; padding-left: 4dp; box-sizing: border-box; font-size: 13dp; font-weight: 820; color: rgb(30, 62, 112); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            /* Explicit rows retain all eight columns at fractional UI scales. */
+            .shop-grid { width: 348dp; flex-direction: column; flex-wrap: nowrap; }
+            .shop-row { display: flex; flex-wrap: nowrap; gap: 4dp; }
+            #npc-shop .ice-fx.ice-br { right: -7dp; } /* 1dp left (user) */
+        </style>
+        <link type="text/rcss" href="../styles/ice_sprites_dark.css" />
+        <link type="text/rcss" href="../styles/dark/npc_shop.css" />
+    </head>
+    <body open-sound="5" close-sound="4" template="window-fixed-size" id="npc-shop">
+        <div data-model="npc-shop">
+        <div class="ui-tab-strip" id="shop-tabs" data-class-shop-tabs-pair="tabs[0].visible + tabs[1].visible + tabs[2].visible + tabs[3].visible == 2">
+            <label id="shop-tab-label" class="shop-tab-label" data-if="tabs[0].visible + tabs[1].visible + tabs[2].visible + tabs[3].visible == 1">{{ tabs[0].visible ? tabs[0].label : tabs[1].visible ? tabs[1].label : tabs[2].visible ? tabs[2].label : tabs[3].label }}</label>
+            <tab id="shop-tab-0" class="ui-tab ui-tab-truncate" onclick="tab0" data-if="tabs[0].visible &amp;&amp; tabs[0].visible + tabs[1].visible + tabs[2].visible + tabs[3].visible > 1" data-class-active="tabs[0].active"><span>{{ tabs[0].label }}</span></tab>
+            <tab id="shop-tab-1" class="ui-tab ui-tab-truncate" onclick="tab1" data-if="tabs[1].visible &amp;&amp; tabs[0].visible + tabs[1].visible + tabs[2].visible + tabs[3].visible > 1" data-class-active="tabs[1].active"><span>{{ tabs[1].label }}</span></tab>
+            <tab id="shop-tab-2" class="ui-tab ui-tab-truncate" onclick="tab2" data-if="tabs[2].visible &amp;&amp; tabs[0].visible + tabs[1].visible + tabs[2].visible + tabs[3].visible > 1" data-class-active="tabs[2].active"><span>{{ tabs[2].label }}</span></tab>
+            <tab id="shop-tab-3" class="ui-tab ui-tab-truncate" onclick="tab3" data-if="tabs[3].visible &amp;&amp; tabs[0].visible + tabs[1].visible + tabs[2].visible + tabs[3].visible > 1" data-class-active="tabs[3].active"><span>{{ tabs[3].label }}</span></tab>
+        </div>
+        <div class="ui-tab-strip" id="shop-subtabs" data-class-shop-tabs-pair="subtabs[0].visible + subtabs[1].visible + subtabs[2].visible + subtabs[3].visible == 2" data-if="subtabs_visible">
+            <label id="shop-sub-label" class="shop-tab-label" data-if="subtabs[0].visible + subtabs[1].visible + subtabs[2].visible + subtabs[3].visible == 1">{{ subtabs[0].visible ? subtabs[0].label : subtabs[1].visible ? subtabs[1].label : subtabs[2].visible ? subtabs[2].label : subtabs[3].label }}</label>
+            <tab id="shop-sub-0" class="ui-tab ui-tab-truncate" onclick="sub0" data-if="subtabs[0].visible &amp;&amp; subtabs[0].visible + subtabs[1].visible + subtabs[2].visible + subtabs[3].visible > 1" data-class-active="subtabs[0].active"><span>{{ subtabs[0].label }}</span></tab>
+            <tab id="shop-sub-1" class="ui-tab ui-tab-truncate" onclick="sub1" data-if="subtabs[1].visible &amp;&amp; subtabs[0].visible + subtabs[1].visible + subtabs[2].visible + subtabs[3].visible > 1" data-class-active="subtabs[1].active"><span>{{ subtabs[1].label }}</span></tab>
+            <tab id="shop-sub-2" class="ui-tab ui-tab-truncate" onclick="sub2" data-if="subtabs[2].visible &amp;&amp; subtabs[0].visible + subtabs[1].visible + subtabs[2].visible + subtabs[3].visible > 1" data-class-active="subtabs[2].active"><span>{{ subtabs[2].label }}</span></tab>
+            <tab id="shop-sub-3" class="ui-tab ui-tab-truncate" onclick="sub3" data-if="subtabs[3].visible &amp;&amp; subtabs[0].visible + subtabs[1].visible + subtabs[2].visible + subtabs[3].visible > 1" data-class-active="subtabs[3].active"><span>{{ subtabs[3].label }}</span></tab>
+        </div>
+        <div class="ice-box shop-box">
+        <div class="shop-grid ui-slot-grid">
+            <div class="shop-row">
+                <item-slot id="shop-slot-0" hide-quantity />
+                <item-slot id="shop-slot-1" hide-quantity />
+                <item-slot id="shop-slot-2" hide-quantity />
+                <item-slot id="shop-slot-3" hide-quantity />
+                <item-slot id="shop-slot-4" hide-quantity />
+                <item-slot id="shop-slot-5" hide-quantity />
+                <item-slot id="shop-slot-6" hide-quantity />
+                <item-slot id="shop-slot-7" hide-quantity />
+            </div>
+            <div class="shop-row">
+                <item-slot id="shop-slot-8" hide-quantity />
+                <item-slot id="shop-slot-9" hide-quantity />
+                <item-slot id="shop-slot-10" hide-quantity />
+                <item-slot id="shop-slot-11" hide-quantity />
+                <item-slot id="shop-slot-12" hide-quantity />
+                <item-slot id="shop-slot-13" hide-quantity />
+                <item-slot id="shop-slot-14" hide-quantity />
+                <item-slot id="shop-slot-15" hide-quantity />
+            </div>
+            <div class="shop-row">
+                <item-slot id="shop-slot-16" hide-quantity />
+                <item-slot id="shop-slot-17" hide-quantity />
+                <item-slot id="shop-slot-18" hide-quantity />
+                <item-slot id="shop-slot-19" hide-quantity />
+                <item-slot id="shop-slot-20" hide-quantity />
+                <item-slot id="shop-slot-21" hide-quantity />
+                <item-slot id="shop-slot-22" hide-quantity />
+                <item-slot id="shop-slot-23" hide-quantity />
+            </div>
+            <div class="shop-row">
+                <item-slot id="shop-slot-24" hide-quantity />
+                <item-slot id="shop-slot-25" hide-quantity />
+                <item-slot id="shop-slot-26" hide-quantity />
+                <item-slot id="shop-slot-27" hide-quantity />
+                <item-slot id="shop-slot-28" hide-quantity />
+                <item-slot id="shop-slot-29" hide-quantity />
+                <item-slot id="shop-slot-30" hide-quantity />
+                <item-slot id="shop-slot-31" hide-quantity />
+            </div>
+            <div class="shop-row">
+                <item-slot id="shop-slot-32" hide-quantity />
+                <item-slot id="shop-slot-33" hide-quantity />
+                <item-slot id="shop-slot-34" hide-quantity />
+                <item-slot id="shop-slot-35" hide-quantity />
+                <item-slot id="shop-slot-36" hide-quantity />
+                <item-slot id="shop-slot-37" hide-quantity />
+                <item-slot id="shop-slot-38" hide-quantity />
+                <item-slot id="shop-slot-39" hide-quantity />
+            </div>
+            <div class="shop-row">
+                <item-slot id="shop-slot-40" hide-quantity />
+                <item-slot id="shop-slot-41" hide-quantity />
+                <item-slot id="shop-slot-42" hide-quantity />
+                <item-slot id="shop-slot-43" hide-quantity />
+                <item-slot id="shop-slot-44" hide-quantity />
+                <item-slot id="shop-slot-45" hide-quantity />
+                <item-slot id="shop-slot-46" hide-quantity />
+                <item-slot id="shop-slot-47" hide-quantity />
+            </div>
+        </div>
+        </div>
+        </div>
+        <div class="ice-fx ice-tl"></div>
+        <div class="ice-fx ice-br"></div>
+    </body>
+</rml>

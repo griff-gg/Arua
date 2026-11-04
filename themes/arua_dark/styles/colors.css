@@ -1,0 +1,31 @@
+/*
+ * Font colors
+ */
+fc_blue { color: rgb(72, 130, 255); }
+fc_crimson { color: rgb(220, 20, 60); }
+fc_darkred { color: rgb(185, 0, 0); }
+fc_red { color: rgb(255, 0, 0); }
+fc_orange { color: rgb(255, 115, 0); }
+fc_lightred { color: rgb(255, 187, 187); }
+fc_cyan { color: rgb(0, 255, 255); }
+fc_gold { color: rgb(255, 217, 0); }
+fc_yellow { color: rgb(255, 255, 0); }
+fc_gray { color: rgb(179, 179, 179); }
+fc_chartreuse { color: rgb(128, 255, 0); }
+fc_green { color: rgb(0, 255, 0); }
+
+/*
+ * Image Colors
+ */
+.imgc-blue { image-color: rgb(0, 0, 255); }
+.imgc-crimson { image-color: rgb(220, 20, 60); }
+.imgc-red { image-color: rgb(255, 0, 0); }
+.imgc-lightred { image-color: rgb(255, 187, 187); }
+.imgc-cyan { image-color:rgb(0, 255, 255); }
+.imgc-yellow { image-color:rgb(255, 255, 0); }
+.imgc-gold { image-color:rgb(255, 217, 0); }
+.imgc-dark-gold { image-color:rgb(209, 178, 0); }
+.imgc-gray { image-color:rgb(179, 179, 179); }
+.imgc-green { image-color:rgb(0, 255, 0); }
+.imgc-dark-green { image-color: rgb(0, 170, 0); }
+.imgc-chartreuse { image-color:rgb(128, 255, 0); }

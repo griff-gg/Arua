@@ -1,0 +1,410 @@
+button
+{
+    display: inline-block;
+    box-sizing: border-box;
+    cursor: hand;
+    text-align: center;
+    vertical-align: middle;
+}
+
+button.default
+{
+    decorator: tiled-horizontal( button-l, button-c, button-r );
+    padding: 4dp 8dp;
+    min-width: 150dp;
+    height: 34dp;
+    line-height: 26dp;
+    font-effect: outline(1dp black);
+}
+
+button.default:disabled, button[disabled]
+{
+    cursor: normal;
+    decorator: tiled-horizontal( button-disabled-l, button-disabled-c, button-disabled-r );
+}
+
+button.default:not(button[disabled]):hover
+{
+    decorator: tiled-horizontal( button-hover-l, button-hover-c, button-hover-r );
+}
+
+button.default:not(button[disabled]):active
+{
+    decorator: tiled-horizontal( button-active-l, button-active-c, button-active-r );
+}
+
+button.default.selected
+{
+    decorator: tiled-horizontal( button-active-l, button-active-c, button-active-r );
+}
+
+
+/*
+ * Minus button
+ */
+button.minus
+{
+    padding: 0;
+    margin: 5dp;
+    min-width: 24dp;
+    width: 24dp;
+    line-height: 26dp;
+    height: 26dp;
+    decorator: image(minus-button-n);
+}
+
+button.minus:disabled, button.minus[disabled]
+{
+    cursor: normal;
+    decorator: image(minus-button-d);
+}
+
+button.minus:not(button.minus[disabled]):hover
+{
+    decorator: image(minus-button-h);
+}
+
+button.minus:not(button.minus[disabled]):active
+{
+    decorator: image(minus-button-a);
+}
+
+button.minus:active
+{
+    decorator: image(minus-button-a);
+}
+
+
+/*
+ * Plus button
+ */
+button.plus
+{
+    margin: 5dp;
+    padding: 0;
+    min-width: 24dp;
+    width: 24dp;
+    line-height: 26dp;
+    height: 26dp;
+    decorator: image(plus-button-n);
+}
+button.plus:disabled, button.plus[disabled]
+{
+    cursor: normal;
+    decorator: image(plus-button-d);
+}
+
+button.plus:not(button.plus[disabled]):hover
+{
+    decorator: image(plus-button-h);
+}
+
+button.plus:not(button.plus[disabled]):active
+{
+    decorator: image(plus-button-a);
+}
+
+button.plus:active
+{
+    decorator: image(plus-button-a);
+}
+
+
+/*
+ * Down arrow button (mimics select selectarrow)
+ */
+button.down-arrow
+{
+    padding: 0;
+    min-width: 24dp;
+    width: 24dp;
+    height: 22dp;
+    decorator: image( dropdown-button-n );
+    cursor: hand;
+}
+
+button.down-arrow:hover
+{
+    decorator: image( dropdown-button-h );
+}
+
+button.down-arrow:active, button.down-arrow[active]
+{
+    decorator: image( dropdown-button-a );
+}
+
+button.down-arrow:disabled, button.down-arrow[disabled]
+{
+    decorator: image( dropdown-button-d );
+    cursor: normal;
+}
+
+
+/*
+ * Small Right button
+ */
+button.left-sm
+{
+    margin: 5dp;
+    padding: 0;
+    min-width: 24dp;
+    width: 24dp;
+    line-height: 26dp;
+    height: 26dp;
+    decorator: image(button-left-sm-n);
+}
+
+button.left-sm:disabled, button.left-sm[disabled]
+{
+    cursor: normal;
+    decorator: image(button-left-sm-d);
+}
+
+button.left-sm:not(button.left-sm[disabled]):hover
+{
+    decorator: image(button-left-sm-h);
+}
+
+button.left-sm:not(button.left-sm[disabled]):active
+{
+    decorator: image(button-left-sm-a);
+}
+
+button.left-sm:active
+{
+    decorator: image(button-left-sm-a);
+}
+
+
+/*
+ * Left right button
+ */
+button.right-sm
+{
+    margin: 5dp;
+    padding: 0;
+    min-width: 24dp;
+    width: 24dp;
+    line-height: 26dp;
+    height: 26dp;
+    decorator: image(button-right-sm-n);
+}
+
+button.right-sm:disabled, button.right-sm[disabled]
+{
+    cursor: normal;
+    decorator: image(button-right-sm-d);
+}
+
+button.right-sm:not(button.right-sm[disabled]):hover
+{
+    decorator: image(button-right-sm-h);
+}
+
+button.right-sm:not(button.right-sm[disabled]):active
+{
+    decorator: image(button-right-sm-a);
+}
+
+button.right-sm:active
+{
+    decorator: image(button-right-sm-a);
+}
+
+
+/*
+ * Trash button
+ */
+button.trash
+{
+    padding: 4dp 3dp;
+    margin: 5dp;
+    min-width: 24dp;
+    width: 24dp;
+    line-height: 26dp;
+    height: 26dp;
+    decorator: image(button-trash-n);
+}
+
+button.trash:disabled, button.trash[disabled]
+{
+    cursor: normal;
+    decorator: image(button-trash-n);
+}
+
+button.trash:not(button.trash[disabled]):hover
+{
+    decorator: image(button-trash-h);
+}
+
+button.trash:not(button.trash[disabled]):active
+{
+    decorator: image(button-trash-a);
+}
+
+button.trash:active
+{
+    decorator: image(button-trash-a);
+}
+
+button.zulie
+{
+    display: inline-block;
+    min-width: 21px;
+    width: 21px;
+    height: 21px;
+    padding: 0;
+    decorator: image(button-zulie-n);
+}
+
+button.zulie:hover
+{
+    decorator: image(button-zulie-h);
+}
+
+button.zulie:active
+{
+    decorator: image(button-zulie-a);
+}
+
+button.close
+{
+    display: inline-block;
+    width: 24dp;
+    height: 26dp;
+    decorator: image(close-button-n);
+}
+
+button.close:hover
+{
+    decorator: image(close-button-h);
+}
+
+button.close:active
+{
+    decorator: image(close-button-a);
+}
+
+button.settings
+{
+    display: inline-block;
+    width: 26dp;
+    height: 24dp;
+    decorator: image(button-settings-n);
+}
+
+button.settings:hover
+{
+    decorator: image(button-settings-h);
+}
+
+button.settings:active,
+button.settings_active
+{
+    decorator: image(button-settings-a);
+}
+
+/*
+ * Move button.
+ *
+ * This is not using a button tag because it is applied to a <handle>
+ */
+.button-move
+{
+    width: 24dp;
+    height: 26dp;
+    decorator: image(button-move-n);
+}
+
+.button-move:disabled, .button-move[disabled]
+{
+    cursor: normal;
+    decorator: image(button-move-n);
+}
+
+.button-move:not(.button-move[disabled]):hover
+{
+    decorator: image(button-move-h);
+}
+
+.button-move:not(.button-move[disabled]):active
+{
+    decorator: image(button-move-a);
+}
+
+.button-move:active
+{
+    decorator: image(button-move-a);
+}
+
+
+/*
+ * Resize button
+ *
+ * This is not using a button tag because it is applied to a <handle>
+ */
+.button-resize
+{
+    width: 24dp;
+    height: 26dp;
+    decorator: image(button-resize-n);
+}
+
+.button-resize:disabled, .button-resize[disabled]
+{
+    cursor: normal;
+    decorator: image(button-resize-n);
+}
+
+.button-resize:not(.button-resize[disabled]):hover
+{
+    decorator: image(button-resize-h);
+}
+
+.button-resize:not(.button-resize[disabled]):active
+{
+    decorator: image(button-resize-a);
+}
+
+.button-resize:active
+{
+    decorator: image(button-resize-a);
+}
+
+/*
+ * Custom checkbox button
+ */
+button.checkbox
+{
+    width: 20dp;
+    height: 16dp;
+    decorator: image(radiobutton);
+    vertical-align: middle;
+    margin: 2dp;
+    cursor: hand;
+}
+
+button.checkbox:hover
+{
+    decorator: image(radiobutton-hover);
+}
+
+button.checkbox:active,
+button.checkbox[checked]:not(:hover)
+{
+    decorator: image(radiobutton-active);
+}
+
+/* new in the 2026-11-03 patch (elements the old sheet did not style) */
+button.up-arrow
+{ padding: 1dp 2dp; min-width: 24dp; width: 24dp; height: 22dp; decorator: image(sq-up-n) content-box;
+}
+button.up-arrow:not([disabled]):hover, button.up-arrow:not([disabled]):focus
+{ decorator: image(sq-up-h) content-box;
+}
+button.up-arrow:not([disabled]):active
+{ decorator: image(sq-up-p) content-box;
+}
+button.up-arrow[disabled]
+{ cursor: normal; decorator: image(sq-up-d) content-box;
+}

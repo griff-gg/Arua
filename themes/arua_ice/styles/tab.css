@@ -1,0 +1,72 @@
+tab
+{
+    display: inline-block;
+    box-sizing: border-box;
+    cursor: hand;
+    text-align: center;
+    vertical-align: middle;
+}
+
+tab.default
+{
+    decorator: tiled-horizontal( button-l, button-c, button-r );
+    padding: 4dp 8dp;
+    min-width: 50dp;
+    height: 34dp;
+    line-height: 26dp;
+    font-effect: outline(1dp black);
+}
+
+tab.default:disabled, tab.default[disabled]
+{
+    cursor: normal;
+    decorator: tiled-horizontal( button-disabled-l, button-disabled-c, button-disabled-r );
+}
+
+tab.default:not(button[disabled]):hover
+{
+    decorator: tiled-horizontal( button-hover-l, button-hover-c, button-hover-r );
+}
+
+tab.default:not(button[disabled]):active
+{
+    decorator: tiled-horizontal( button-active-l, button-active-c, button-active-r );
+}
+
+tab.default:active
+{
+    decorator: tiled-horizontal( button-active-l, button-active-c, button-active-r );
+}
+
+tab.default:selected
+{
+    color: white;
+    font-effect: outline(1dp black), glow(1.5dp white);
+    decorator: tiled-horizontal( button-active-l, button-active-c, button-active-r );
+}
+
+/* new in the 2026-11-03 patch */
+.ui-tab-strip, tabset.ui-tabset > tabs
+{ display: flex; gap: 2dp; height: 24dp; margin-bottom: 4dp; box-sizing: border-box; border-bottom: 1dp rgb(120, 75, 69);
+}
+.ui-tab
+{ flex: 1; min-width: 0; height: 24dp; padding: 1dp 4dp; line-height: 20dp; font-size: 13dp; white-space: nowrap; color: white; background-color: rgb(29, 29, 25); border: 1dp rgb(80, 77, 63); border-bottom-color: rgb(120, 75, 69); border-top-left-radius: 3dp; border-top-right-radius: 3dp;
+}
+.ui-tab:not([disabled]):hover
+{ color: yellow; background-color: rgb(55, 35, 32);
+}
+.ui-tab.selected, .ui-tab.active, .ui-tab:selected
+{ color: yellow; decorator: vertical-gradient(rgb(128, 62, 44) rgb(63, 17, 8)); border-color: rgb(190, 64, 53); border-bottom-color: rgb(63, 17, 8);
+}
+.ui-tab str, .ui-tab span
+{ pointer-events: none;
+}
+.ui-tab[disabled]
+{ cursor: normal; opacity: 0.5;
+}
+.ui-tab-truncate
+{ overflow: hidden; text-overflow: ellipsis;
+}
+.ui-tab[disabled], .ui-tab[disabled]:hover, .ui-tab[disabled]:focus
+{ color: rgb(201,195,178);
+}

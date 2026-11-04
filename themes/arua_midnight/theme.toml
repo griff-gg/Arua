@@ -1,0 +1,8 @@
+name = "Arua Midnight"
+
+# Nunito family. Emoji and CJK fallback faces are built into the client.
+[[fonts]]
+file = "font/nunito/Nunito-VariableFont_wght.ttf"
+
+[[fonts]]
+file = "font/nunito/Nunito-Italic-VariableFont_wght.ttf"

@@ -1,0 +1,8 @@
+skill-slot { display: inline-block; position: relative; width: 40dp; height: 40dp; }
+skill-slot .skill-image, skill-slot .skill-element, skill-slot .skill-cooldown-fill, skill-slot .skill-level, skill-slot .skill-remaining, skill-slot .skill-expiry { position: absolute; pointer-events: none; }
+skill-slot .skill-image, skill-slot .skill-cooldown-fill { left: 0; top: 0; width: 100%; height: 100%; }
+skill-slot .skill-cooldown-fill { image-color: rgba(0, 0, 0, 150); }
+skill-slot .skill-element { left: 20dp; top: 0; width: 20dp; height: 20dp; }
+skill-slot .skill-level { right: 2dp; bottom: 1dp; font-size: 12dp; font-weight: 820; font-effect: outline(1dp black); }
+skill-slot .skill-remaining { left: 0; top: 11dp; width: 40dp; text-align: center; font-size: 15dp; font-weight: 820; font-effect: outline(1dp black); }
+skill-slot .skill-expiry { left: 0; top: 40dp; width: 40dp; text-align: center; font-size: 12dp; font-weight: 820; font-effect: outline(1dp black); }

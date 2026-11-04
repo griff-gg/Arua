@@ -1,0 +1,231 @@
+.window-fixed-size
+{
+    display: block;
+
+    min-width: 100dp;
+    min-height: 50dp;
+
+    padding: 4dp;
+    padding-top: 25dp;
+
+    decorator: tiled-box(
+        window-tl, window-t, window-tr,
+        window-l,  window-c, window-r,
+        window-bl, window-b, window-br
+    );
+}
+
+.window-resizeable
+{
+    display: block;
+
+    min-width: 100dp;
+    min-height: 100dp;
+
+    padding: 4dp;
+    padding-top: 25dp;
+    padding-bottom: 14dp;
+
+    decorator: tiled-box(
+        window-tl, window-t, window-tr,
+        window-l,  window-c, window-r,
+        window-bl, window-b, window-br
+    );
+}
+
+.window-fixed
+{
+    display: block;
+
+    min-width: 100dp;
+    min-height: 100dp;
+
+    padding: 4dp;
+    padding-top: 25dp;
+
+    decorator: tiled-box(
+        window-tl, window-t, window-tr,
+        window-l,  window-c, window-r,
+        window-bl, window-b, window-br
+    );
+}
+
+.window-box
+{
+    display: block;
+    padding: 4dp;
+
+    decorator: tiled-box(
+        window-tl, window-t, window-tr,
+        window-l,  window-c, window-r,
+        window-bl, window-b, window-br
+    );
+}
+
+.content-box
+{
+    display: block;
+    padding: 2dp;
+    box-sizing: border-box;
+    background: rgba(33, 33, 33, 80);
+    border: 1dp rgba(134, 134, 134, 191);
+    border-radius: 4dp;
+}
+
+.window-small
+{
+    display: block;
+
+    min-width: 50dp;
+    min-height: 50dp;
+
+    padding: 10dp;
+    padding-top: 12dp;
+    padding-bottom: 12dp;
+
+    decorator: tiled-box(
+        window-sm-tless-tl, window-sm-tless-t, window-sm-tless-tr,
+        window-sm-l,  window-sm-c, window-sm-r,
+        window-sm-bl, window-sm-b, window-sm-br
+    );
+}
+
+.window-title
+{
+    display: inline-block;
+    position: absolute;
+    top: 0dp;
+    left: 0dp;
+
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 10dp;
+    line-height: 1.75em;
+
+    font-weight: 820;
+    font-effect: outline(1dp black);
+
+    cursor: drag;
+}
+
+.window-small > .window-title
+{
+    height: 15dp;
+}
+
+.window-title-text
+{
+    margin-left: 10dp;
+}
+
+button.window-title-close
+{
+    position: absolute;
+    top: 0dp;
+    right: 2dp;
+
+    width: 24dp;
+    height: 26dp;
+    min-width: 24dp;
+
+    decorator: image(close-button-n);
+
+    cursor: hand;
+}
+
+button.window-title-close:hover
+{
+    decorator: image(close-button-h);
+}
+
+button.window-title-close:active
+{
+    decorator: image(close-button-a);
+}
+button.window-title-close:disabled,
+button.window-title-close[disabled]
+{
+    decorator: image(close-button-d);
+}
+
+#window-content
+{
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 4dp;
+
+    decorator: tiled-box(
+        window-in-tl, window-in-t, window-in-tr,
+        window-in-l,  window-in-c, window-in-r,
+        window-in-bl, window-in-b, window-in-br
+    );
+}
+
+#window-content-small
+{
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 4dp;
+}
+
+.window-pane
+{
+    box-sizing: border-box;
+    padding: 4dp;
+
+    decorator: tiled-box(
+        window-in-tl, window-in-t, window-in-tr,
+        window-in-l,  window-in-c, window-in-r,
+        window-in-bl, window-in-b, window-in-br
+    );
+}
+
+.window-resize-handle
+{
+    position: absolute;
+    right: 0dp;
+    bottom: 0dp;
+
+    width: 14dp;
+    height: 14dp;
+
+    decorator: image(handle-resize-window-n);
+
+    cursor: drag;
+}
+
+.window-resize-handle:hover
+{
+    decorator: image(handle-resize-window-h);
+}
+
+span.separator {
+    display: inline-block;
+    position: relative;
+    width: 2dp;
+    height: 14dp;
+    margin: 0 4dp;
+    decorator: tiled-vertical( vertical-separator-t, vertical-separator-c, vertical-separator-b );
+}
+
+span.line-splitter {
+    display: inline-block;
+    position: relative;
+    width: 150dp;
+    height: 6dp;
+    decorator: tiled-horizontal( line-splitter-l, line-splitter-c, line-splitter-r );
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,35 @@
+<rml>
+    <head>
+        <title>Monster names</title>
+        <link type="text/rcss" href="../styles/html.css" />
+        <link type="text/rcss" href="../styles/spritesheet_world_ui.css" />
+        <link type="text/rcss" href="../styles/spritesheet_targetmark.css" />
+        <link type="text/rcss" href="../styles/spritesheet_elementicon.css" />
+        <link type="text/rcss" href="../styles/spritesheet_gauge.css" />
+        <link type="text/rcss" href="../styles/gauge.css" />
+        <link type="text/rcss" href="../styles/components.css" />
+        <link type="text/rcss" href="../styles/ice_sprites.css" />
+        <link type="text/rcss" href="../styles/ice_gauges.css" />
+        <style>
+            .monster-nameplate { margin-top: -24dp; }
+            .monster-nameplate.detailed { margin-top: -44dp; }
+            .monster-marker:not(.generic) { position: absolute; height: 18dp; top: 50%; margin-top: -9dp; }
+            /* Arua: weak-against row above the detailed (targeted) plate */
+            .np-weak { position: absolute; left: 100%; top: 50%; margin-top: -9dp; margin-left: 26dp; height: 18dp; line-height: 18dp; white-space: nowrap; text-align: left; }
+            .np-weak .np-sep { display: inline-block; margin-right: 4dp; font-size: 14dp; font-weight: 820; color: rgb(230, 238, 248); vertical-align: top; }
+            .np-weak img { display: inline-block; width: 18dp; height: 18dp; margin: 0dp 2dp 0dp 0dp; vertical-align: top; }
+            .monster-debug { position: absolute; bottom: 100%; width: 100%; font-size: 10dp; color: yellow; }
+        </style>
+    </head>
+    <body id="monster-nameplates">
+        <!-- The model binds on a child: a body-level model attaches after parsing, too late for data-for templates. -->
+        <div id="monster-nameplates-root" data-model="monster-nameplates" data-style-font-size="font_size + 'dp'">
+        <div class="monster-nameplate" data-for="plate : nameplates" data-if="plate.visible" data-class-detailed="plate.detailed"
+             data-style-left="plate.x + 'px'" data-style-top="plate.y + 'px'" data-style-transform="plate.transform" data-style-color="plate.color">
+            <div class="monster-name-line"><span class="monster-name">{{plate.name}}</span><img class="monster-marker left" data-if="plate.show_left" data-class-generic="plate.generic" data-attr-sprite="plate.left_sprite"/><img class="monster-marker right" data-if="plate.show_right" data-class-generic="plate.generic" data-class-mirrored="plate.mirrored" data-attr-sprite="plate.right_sprite"/><span class="np-weak" data-if="plate.detailed &amp;&amp; plate.show_right &amp;&amp; ((plate.right_sprite == 'elementicon-1') || (plate.right_sprite == 'elementicon-2') || (plate.right_sprite == 'elementicon-3') || (plate.right_sprite == 'elementicon-4') || (plate.right_sprite == 'elementicon-5') || (plate.right_sprite == 'elementicon-6') || (plate.right_sprite == 'elementicon-7') || (plate.right_sprite == 'elementicon-8'))"><span class="np-sep">|</span><img data-attr-sprite="plate.right_sprite == 'elementicon-1' ? 'elementicon-3' : plate.right_sprite == 'elementicon-2' ? 'elementicon-3' : plate.right_sprite == 'elementicon-3' ? 'elementicon-5' : plate.right_sprite == 'elementicon-4' ? 'elementicon-1' : plate.right_sprite == 'elementicon-5' ? 'elementicon-1' : plate.right_sprite == 'elementicon-6' ? 'elementicon-4' : plate.right_sprite == 'elementicon-7' ? 'elementicon-1' : plate.right_sprite == 'elementicon-8' ? 'elementicon-2' : ''"/><img data-attr-sprite="plate.right_sprite == 'elementicon-1' ? 'elementicon-8' : plate.right_sprite == 'elementicon-2' ? 'elementicon-6' : plate.right_sprite == 'elementicon-3' ? 'elementicon-7' : plate.right_sprite == 'elementicon-4' ? 'elementicon-2' : plate.right_sprite == 'elementicon-5' ? 'elementicon-4' : plate.right_sprite == 'elementicon-6' ? 'elementicon-7' : plate.right_sprite == 'elementicon-7' ? 'elementicon-5' : plate.right_sprite == 'elementicon-8' ? 'elementicon-6' : ''"/><img data-if="(plate.right_sprite == 'elementicon-2') || (plate.right_sprite == 'elementicon-3') || (plate.right_sprite == 'elementicon-4') || (plate.right_sprite == 'elementicon-5')" data-attr-sprite="plate.right_sprite == 'elementicon-2' ? 'elementicon-7' : plate.right_sprite == 'elementicon-3' ? 'elementicon-8' : plate.right_sprite == 'elementicon-4' ? 'elementicon-8' : plate.right_sprite == 'elementicon-5' ? 'elementicon-6' : ''"/></span></div>
+                        <gauge class="monster-health horizontal-sm-md red" animation-enabled="false" data-if="plate.show_health" data-attr-gmax="plate.max_hp" data-attr-gvalue="plate.hp"/>
+            <div class="monster-debug" data-if="plate.show_debug">{{plate.debug_info}}</div>
+        </div>
+        </div>
+    </body>
+</rml>

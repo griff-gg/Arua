@@ -1,0 +1,252 @@
+<rml>
+    <head>
+        <title>
+            Character names
+        </title>
+        <link type="text/rcss" href="../styles/html.css" />
+        <link type="text/rcss" href="../styles/spritesheet_world_ui.css" />
+        <link type="text/rcss" href="../styles/spritesheet_overlayicon.css" />
+        <link type="text/rcss" href="../styles/spritesheet_clanback.css" />
+        <link type="text/rcss" href="../styles/spritesheet_clancenter.css" />
+        <link type="text/rcss" href="../styles/ice_nameplate_gauges.css" />
+        <link type="text/rcss" href="../styles/components.css" />
+        <style>
+            #character-nameplates-root, character-nameplates {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            character-nameplates {
+                line-height: 1.4;
+            }
+            .world-template-source {
+                display: none;
+            }
+            .nameplate {
+                display: inline-block;
+                position: relative;
+                text-align: left;
+            }
+            .name-line {
+                display: inline-block;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+            }
+            .name {
+                display: inline-block;
+                white-space: normal;
+                word-break: break-word;
+            }
+            .marker {
+                display: none;
+                position: absolute;
+                width: 16dp;
+                height: 14dp;
+                top: 50%;
+                margin-top: -7dp;
+            }
+            .selected .marker {
+                display: block;
+            }
+            .marker.right {
+                transform: scaleX(-1);
+            }
+            .gauges {
+                display: block;
+            }
+            .gauge {
+                position: relative;
+                margin-left: auto;
+                margin-right: auto;
+                display: none;
+            }
+            .health .hp, .health .mp, .shield .shield-bar {
+                display: block;
+            }
+            .gauge .back, .gauge .fill {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .clan {
+                display: none;
+                position: absolute;
+                width: 256dp;
+                left: 50%;
+                transform: translateX(-50%);
+                white-space: nowrap;
+            }
+            .has-clan .clan {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .clan-label {
+                display: inline-block;
+                position: relative;
+                flex-shrink: 0;
+            }
+            .clan-mark {
+                display: inline-block;
+                position: relative;
+                width: 20dp;
+                height: 20dp;
+                vertical-align: middle;
+            }
+            .clan-mark world-sprite {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 20dp;
+                height: 20dp;
+            }
+            .clan-name {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .mark-custom, .custom-mark .mark-back, .custom-mark .mark-center, .hide-marks .clan-mark {
+                display: none;
+            }
+            .custom-mark .mark-custom {
+                display: block;
+            }
+            .emoticon {
+                display: none;
+                position: absolute;
+                width: 75dp;
+                height: 75dp;
+                left: 50%;
+                transform: translateX(-50%);
+                top: -93dp;
+            }
+            .has-emoticon .emoticon {
+                display: block;
+            }
+            .health .emoticon {
+                top: -84dp;
+            }
+            .self .emoticon {
+                top: -77dp;
+            }
+            .nameplate {
+                top: -24dp;
+            }
+            .nameplate.health {
+                top: -40dp;
+            }
+            .nameplate.self {
+                top: -48dp;
+            }
+            .name {
+                max-width: 256dp;
+            }
+            .marker.left {
+                left: -20dp;
+            }
+            .marker.right {
+                right: -20dp;
+            }
+            .gauge {
+                width: 120dp;
+            }
+            .hp {
+                height: 12dp;
+                margin-top: 4dp;
+            }
+            .mp {
+                height: 4dp;
+                margin-top: 2dp;
+            }
+            .shield-bar {
+                height: 4dp;
+                margin-top: 4dp;
+            }
+            .clan {
+                bottom: 100%;
+                margin-bottom: 4dp;
+            }
+            .clan-mark {
+                position: absolute;
+                left: -24dp;
+                top: 50%;
+                margin-top: -10dp;
+            }
+            .clan-name {
+                max-width: 256dp;
+                overflow: hidden;
+            }
+            .clan-mark, .clan-name {
+                vertical-align: top;
+            }
+        </style>
+        <script>
+            document:AddEventListener("world-template-created", function(created)
+                local view = created.target_element
+                if view:GetAttribute("world-template") ~= "nameplate" then
+                    return
+                end
+                -- Round the 1.4 line height to pixels like the legacy labels. Only changed
+                -- values are written, so an unchanged label is not laid out twice.
+                local line, clan
+                view:AddEventListener("worldlayout", function(event)
+                    local p = event.parameters
+                    local height = math.floor(p.font_size * 1.4 + 0.5)
+                    if height ~= line then
+                        line = height
+                        view.style["line-height"] = tostring(height) .. "px"
+                    end
+                    local clan_height = math.max(height, 20 * p.density)
+                    if clan_height ~= clan then
+                        clan = clan_height
+                        view:QuerySelector(".clan").style["height"] = tostring(clan_height) .. "px"
+                    end
+                end)
+            end)
+        </script>
+    </head>
+    <body id="character-nameplates">
+        <!-- Theme layout is retained by the native world layer; movement reuses geometry. -->
+        <div id="character-nameplates-root" data-model="character-nameplates" data-style-font-size="font_size + 'dp'">
+            <character-nameplates id="character-nameplates-layer">
+                <div class="world-template-source">
+                    <div world-template="nameplate" class="nameplate" anchor-x="0.5" world-class-self="self" world-class-health="health" world-class-shield="shield" world-class-selected="selected" world-class-has-clan="has_clan" world-class-has-emoticon="has_emoticon" world-class-custom-mark="custom_mark" world-class-hide-marks="hide_marks">
+                        <div class="name-line" world-clearance>
+                            <world-sprite class="marker left" sprite="world-target-marker"/>
+                            <span class="name" world-text="name" world-color="color"/>
+                            <world-sprite class="marker right" sprite="world-target-marker"/>
+                        </div>
+                        <div class="gauges">
+                            <div class="gauge shield-bar">
+                                <world-sprite class="back" sprite="gauge-bg-sm-sm"/>
+                                <world-sprite class="fill" sprite="gauge-purple-sm-sm" world-attr-value="shield_value" world-attr-max="max_shield"/>
+                            </div>
+                            <div class="gauge hp">
+                                <world-sprite class="back" sprite="gauge-bg-sm-md"/>
+                                <world-sprite class="fill" sprite="gauge-red-sm-md" world-attr-value="hp" world-attr-max="max_hp"/>
+                            </div>
+                            <div class="gauge mp">
+                                <world-sprite class="back" sprite="gauge-bg-sm-sm"/>
+                                <world-sprite class="fill" sprite="gauge-blue-sm-sm" world-attr-value="mp" world-attr-max="max_mp"/>
+                            </div>
+                        </div>
+                        <div class="clan" world-clearance>
+                            <div class="clan-label">
+                                <div class="clan-mark">
+                                    <world-sprite class="mark-back" world-attr-sprite="clan_back" world-prefix-sprite="clanback-"/>
+                                    <world-sprite class="mark-center" world-attr-sprite="clan_center" world-prefix-sprite="clancenter-"/>
+                                    <world-sprite class="mark-custom" world-attr-src="mark_path"/>
+                                </div>
+                                <palette-text class="clan-name" world-attr-text="clan_name" world-attr-colors="clan_colors"/>
+                            </div>
+                        </div>
+                        <world-sprite class="emoticon" world-attr-sprite="emoticon" world-prefix-sprite="world-emote-"/>
+                    </div>
+                </div>
+            </character-nameplates>
+        </div>
+    </body>
+</rml>

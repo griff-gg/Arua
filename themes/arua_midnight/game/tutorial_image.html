@@ -1,0 +1,16 @@
+<rml>
+    <head>
+        <title>Scripted tutorial image</title>
+        <link type="text/rcss" href="../styles/html.css" />
+        <link type="text/rcss" href="../styles/components.css" />
+        <style>
+            body { z-index: -110; }
+            #tutorial-image { position: absolute; pointer-events: none; }
+        </style>
+    </head>
+    <body class="ui-world-layer" id="tutorial-image-overlay">
+        <div data-model="tutorial-image">
+            <img id="tutorial-image" data-if="src != ''" data-attr-src="src" data-style-left="x + 'dp'" data-style-top="y + 'dp'" data-style-opacity="opacity" />
+        </div>
+    </body>
+</rml>

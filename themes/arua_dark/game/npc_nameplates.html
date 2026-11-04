@@ -1,0 +1,32 @@
+<rml>
+    <head>
+        <title>NPC names</title>
+        <link type="text/rcss" href="../styles/html.css" />
+        <link type="text/rcss" href="../styles/spritesheet_world_ui.css" />
+        <link type="text/rcss" href="../styles/spritesheet_gauge.css" />
+        <link type="text/rcss" href="../styles/gauge.css" />
+        <link type="text/rcss" href="../styles/components.css" />
+        <style>
+            .npc-nameplate { margin-top: -52dp; }
+            .npc-nameplate.titled { margin-top: -68dp; }
+            .npc-title { color: rgb(255, 247, 191); font-weight: 820; max-height: 2.8em; margin-bottom: 4dp; overflow: hidden; word-break: break-word; }
+            .npc-name-line { color: rgb(231, 255, 174); }
+            .npc-quest { position: absolute; width: 43dp; height: 43dp; left: 50%; margin-left: -21.5dp; top: -47dp; }
+            .npc-selected { display: none; }
+            .selected .npc-selected { display: block; }
+        </style>
+    </head>
+    <body id="npc-nameplates">
+        <!-- The model binds on a child: a body-level model attaches after parsing, too late for data-for templates. -->
+        <div id="npc-nameplates-root" data-model="npc-nameplates" data-style-font-size="font_size + 'dp'">
+        <div class="npc-nameplate" data-for="plate : nameplates" data-if="plate.visible"
+             data-class-selected="plate.selected" data-class-titled="plate.has_title"
+             data-style-left="plate.x + 'px'" data-style-top="plate.y + 'px'" data-style-transform="plate.transform">
+            <img class="npc-quest" data-if="plate.has_quest" data-attr-sprite="plate.quest_sprite"/>
+            <div class="npc-title" data-if="plate.has_title && !plate.hide_name">{{plate.title}}</div>
+            <div class="npc-name-line" data-if="!plate.hide_name"><span class="npc-name">{{plate.name}}</span><img class="npc-selected left" sprite="world-target-marker"/><img class="npc-selected right" sprite="world-target-marker"/></div>
+            <gauge class="npc-health horizontal-sm-md red" animation-enabled="false" data-if="!plate.hide_name && plate.show_health" data-attr-gmax="plate.max_hp" data-attr-gvalue="plate.hp"/>
+        </div>
+        </div>
+    </body>
+</rml>

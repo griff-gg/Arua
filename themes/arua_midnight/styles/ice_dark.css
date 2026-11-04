@@ -1,0 +1,65 @@
+/* ice theme DARK MODE (test: Inventory only). The switch .bat files copy ice_dark_on.css or ice_dark_off.css over
+ * styles/ice_dark.css; restart the game after switching. Needs ../styles/ice_sprites_dark.css linked too. */
+
+/* frame */
+.window-fixed-size,
+#inventory-window.window-fixed-size,
+#inventory-window .window-fixed-size {
+    decorator: tiled-box(
+        icd-frame-tl, icd-frame-t, icd-frame-tr,
+        icd-frame-l,  icd-frame-c, icd-frame-r,
+        icd-frame-bl, icd-frame-b, icd-frame-br
+    );
+}
+.window-title { font-effect: outline(1.5dp rgb(6, 16, 31)); }
+
+/* inner panel */
+body#inventory-window #window-content {
+    decorator: tiled-box(
+        icd-panel-tl, icd-panel-t, icd-panel-tr,
+        icd-panel-l,  icd-panel-c, icd-panel-r,
+        icd-panel-bl, icd-panel-b, icd-panel-br
+    );
+    color: rgb(214, 228, 245);
+}
+
+/* tabs (selected stays gold, re-declared so it still wins over the dark default) */
+body#inventory-window .ui-tabs > button.default { decorator: tiled-horizontal(icd-tab-l, icd-tab-c, icd-tab-r); }
+body#inventory-window .ui-tabs > button.default:hover { decorator: tiled-horizontal(icd-tab-hover-l, icd-tab-hover-c, icd-tab-hover-r); }
+body#inventory-window .ui-tabs > button.default,
+body#inventory-window .ui-tabs > button.default str { color: rgb(207, 224, 244); }
+body#inventory-window .ui-tabs > button.active,
+body#inventory-window .ui-tabs > button.selected,
+body#inventory-window .ui-tabs > button.active:hover,
+body#inventory-window .ui-tabs > button.selected:hover { decorator: tiled-horizontal(ice-tab-sel-l, ice-tab-sel-c, ice-tab-sel-r); }
+body#inventory-window .ui-tabs > button.active,
+body#inventory-window .ui-tabs > button.active str,
+body#inventory-window .ui-tabs > button.selected,
+body#inventory-window .ui-tabs > button.selected str { color: rgb(92, 50, 8); }
+
+/* slots */
+.equipment-cell { decorator: image(icd-equip); }
+.equipment-cell.filled { decorator: image(ice-equip-gold); }
+.equipment-cell > img { opacity: 0.7; }
+.bag-cell { decorator: image(icd-slot); }
+
+/* boxes */
+.inv-box {
+    background-color: rgb(28, 42, 62);
+    border: 1dp rgb(51, 80, 122);
+}
+body#inventory-window .inventory-footer {
+    background-color: rgb(28, 42, 62);
+    border: 1dp rgb(51, 80, 122);
+}
+
+/* text */
+.ui-currency, #inventory-weight, #inventory-zulie { color: rgb(214, 228, 245); }
+#inventory-weight.overweight { color: rgb(255, 110, 110); }
+#inventory-operation { color: rgb(240, 200, 112); }
+.vehicle-stats { color: rgb(214, 228, 245); }
+.vehicle-stat span { color: rgb(240, 200, 112); }
+
+/* flourishes: navy fill instead of light blue */
+#ice-corner-tl, .ice-fx.ice-tl { decorator: image(icd-corner-tl); }
+#ice-corner-br, .ice-fx.ice-br { decorator: image(icd-corner-br); }

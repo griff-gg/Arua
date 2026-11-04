@@ -1,0 +1,38 @@
+<template name="gauge-info-vmp">
+    <head>
+        <style>
+            gauge > span.ginner,
+            progress > span.ginner {
+                height: 100%;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            span.gauge-inner {
+                flex: 2;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+            span.gauge-left {
+                flex-grow: 0.85;
+                text-align: right;
+            }
+
+            span.gauge-right {
+                text-align: left;
+            }
+        </style>
+    </head>
+
+    <body>
+        <span class="ginner gauge-inner">
+            <span class="gauge-left"><label id="value" />/<label id="max" /></span>
+            <span class="separator"></span>
+            <span class="gauge-right"><label id="percent" />%</span>
+        </span>
+    </body>
+</rml>

@@ -1,0 +1,101 @@
+<rml>
+    <head>
+        <title>
+            Shop signs
+        </title>
+        <link type="text/rcss" href="../styles/html.css" />
+        <link type="text/rcss" href="../styles/components.css" />
+        <style>
+            @spritesheet shop-sign {
+                src: ../imgs/ice_shopsign.dds; /* ice theme: dark-blue bar + zulie coin */
+                shop-sign-frame: 0px 0px 256px 32px;
+            }
+            body {
+                z-index: -35;
+            }
+            store-signs {
+                display: block; position: absolute; width: 100%; height: 100%;
+                pointer-events: none; font-size: 14dp; line-height: 20dp;
+                font-effect: outline(1dp rgb(10, 24, 48)); color: rgb(255, 255, 255);
+            }
+            .world-template-source {
+                display: none;
+            }
+            .shop {
+                position: relative;
+                display: block;
+                width: 256dp;
+                max-width: 100%;
+                text-align: center;
+            }
+            .shop-frame {
+                position: relative;
+                height: 32dp;
+                decorator: image(shop-sign-frame) border-box;
+                box-sizing: border-box;
+            }
+            .shop-title {
+                display: block;
+                color: yellow;
+            }
+            .shop {
+                top: -4dp;
+            }
+            .shop-frame {
+                padding: 6dp 4dp;
+            }
+            .shop-selection {
+                display: none;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+                border: 1dp yellow;
+            }
+            .shop.selected .shop-selection {
+                display: block;
+            }
+            .shop.viewed .shop-frame {
+                opacity: 0.5;
+            }
+            .shop-title {
+                max-height: 20dp;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .shop-owner {
+                display: block;
+                margin-top: 4dp;
+                white-space: pre-wrap;
+                max-height: 40dp;
+                overflow: hidden;
+                color: #add8e6;
+            }
+            .shop.company .shop-owner {
+                color: yellow;
+            }
+            .shop-owner:empty {
+                display: none;
+            }
+            /* arua: after the 2026-11-03 patch */
+            .shop-title { color: rgb(255, 255, 255); }
+        </style>
+    </head>
+    <body class="ui-world-layer" id="store-signs">
+        <!-- RML owns the panel layout; the native layer owns world position and depth. -->
+        <store-signs id="store-signs-root">
+            <div class="world-template-source">
+                <div world-template="shop" class="shop" anchor-x="0.5" anchor-y="1" anchor-clearance="true" clamp-to-viewport="true" world-class-selected="selected" world-class-viewed="viewed" world-class-company="company">
+                    <div class="shop-frame">
+                        <span class="shop-title" world-text="title"/>
+                        <div class="shop-selection"/>
+                    </div>
+                    <span class="shop-owner" world-text="owner"/>
+                </div>
+            </div>
+        </store-signs>
+    </body>
+</rml>

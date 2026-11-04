@@ -1,0 +1,2 @@
+clan-mark { display: inline-block; position: relative; width: 20dp; height: 20dp; }
+clan-mark > img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }

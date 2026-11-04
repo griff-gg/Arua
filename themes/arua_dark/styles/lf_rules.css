@@ -1,0 +1,2 @@
+/* Arua loot filter rules (empty). Keep one rule: a sheet without rules fails to load. */
+.lf-rules-ok { display: block; }

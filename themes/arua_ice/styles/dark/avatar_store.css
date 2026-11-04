@@ -1,0 +1,2 @@
+/* Arua Ice: no dark overrides. Keep one rule: a sheet without rules fails to load. */
+.ice-dark-off { display: block; }

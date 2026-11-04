@@ -1,0 +1,27 @@
+<rml>
+    <head>
+        <title>World object labels</title>
+        <link type="text/rcss" href="../styles/html.css" />
+        <link type="text/rcss" href="../styles/components.css" />
+        <style>
+            body { z-index: -45; }
+            .world-object-label { position: absolute; pointer-events: none; }
+            /* Scripts supply font and box dimensions; keep compact lines inside those bounds. */
+            .world-object-text { width: 100%; height: 100%; text-align: center; line-height: 1.2; white-space: pre-wrap; word-break: break-word; overflow: hidden; }
+            .world-object-image { width: 100%; height: 100%; }
+        </style>
+    </head>
+    <body class="ui-world-layer" id="world-object-labels">
+        <!-- The model binds on a child: a body-level model attaches after parsing, too late for data-for templates. -->
+        <div id="world-object-labels-root" data-model="world-object-labels">
+        <div class="world-object-label" data-for="label : labels" data-if="label.visible"
+             data-style-left="label.x + 'px'" data-style-top="label.y + 'px'"
+             data-style-width="label.width + 'dp'" data-style-height="label.height + 'dp'">
+            <span class="world-object-text" data-if="!label.image" data-style-color="label.color"
+                  data-style-font-size="label.font_size + 'dp'" data-style-font-weight="label.font_weight"
+                  data-style-font-style="label.font_style" data-style-font-effect="label.font_effect">{{label.text}}</span>
+            <img class="world-object-image" data-if="label.image" data-attr-src="label.image_source" data-attr-rect="label.image_rect"/>
+        </div>
+        </div>
+    </body>
+</rml>

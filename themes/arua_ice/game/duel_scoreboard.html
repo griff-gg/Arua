@@ -1,0 +1,64 @@
+<rml>
+    <head>
+        <title>Duel scoreboard</title>
+        <link type="text/rcss" href="../styles/html.css" />
+        <link type="text/rcss" href="../styles/spritesheet_icons.css" />
+        <style>
+            body { position: absolute; left: 0; top: 0; width: 100vw; height: 100vh; margin: 0; padding: 0; pointer-events: none; z-index: -30; }
+            #duel-scoreboards * { pointer-events: none; }
+            .duel-board { position: absolute; width: 240dp; max-width: 95vw; box-sizing: border-box; transform: translateX(-50%); padding: 4dp 6dp; background-color: rgba(20, 24, 29, 190); border: 1dp rgba(164, 169, 177, 55); border-radius: 3dp; font-effect: shadow(1dp 1dp black); }
+            .duel-players { display: flex; align-items: center; }
+            .duel-player { display: flex; align-items: center; flex: 1; min-width: 0; gap: 6dp; }
+            .duel-portrait { width: 32dp; height: 32dp; flex-shrink: 0; }
+            .duel-player-info { flex: 1; min-width: 0; text-align: right; }
+            .duel-player.second .duel-player-info { text-align: left; }
+            .duel-name { display: block; height: 14dp; font-size: 12dp; line-height: 14dp; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: rgb(221, 225, 231); }
+            .duel-score { display: block; height: 18dp; font-size: 16dp; font-weight: 820; line-height: 18dp; white-space: nowrap; overflow: hidden; color: rgb(244, 234, 210); }
+            .duel-versus { position: relative; width: 12dp; height: 32dp; flex-shrink: 0; z-index: 2; }
+            .duel-vs { position: absolute; left: -10dp; top: 0; width: 32dp; height: 23dp; line-height: 23dp; text-align: center; font-size: 22dp; font-weight: 820; font-style: italic; color: rgb(213, 182, 119); font-effect: outline(1dp black), shadow(1dp 1dp black); }
+            .duel-round { position: absolute; left: -10dp; top: 22dp; width: 32dp; height: 10dp; line-height: 10dp; text-align: center; font-size: 10dp; font-weight: 820; font-style: italic; color: rgb(128, 235, 255); white-space: nowrap; font-effect: outline(1dp black), shadow(1dp 1dp black), shadow(2dp 2dp black); }
+            .duel-time { display: block; margin-top: 2dp; height: 12dp; line-height: 12dp; text-align: center; font-size: 11dp; color: rgb(160, 204, 215); font-weight: 820; }
+
+            /* ===== ice theme: dark-blue board like the minimap tooltips ===== */
+            .duel-board {
+                background-color: rgba(14, 32, 62, 225);
+                border: 1dp rgb(150, 190, 225);
+                border-radius: 8dp;
+            }
+            .duel-name { color: rgb(255, 255, 255); }
+            .duel-score { color: rgb(255, 214, 120); }
+            .duel-vs { color: rgb(255, 214, 120); font-effect: outline(1dp rgb(14, 32, 62)), shadow(1dp 1dp black); }
+            .duel-round { color: rgb(150, 210, 255); }
+            .duel-time { color: rgb(150, 210, 255); }
+        </style>
+        <link type="text/rcss" href="../styles/ice_sprites_dark.css" />
+        <link type="text/rcss" href="../styles/dark/duel_scoreboard.css" />
+    </head>
+    <body id="duel-scoreboards">
+        <div data-model="duel_scoreboard">
+            <div class="duel-board" data-for="board : boards" data-attr-id="'duel-board-' + board.id" data-style-left="board.x + 'px'" data-style-top="board.y + 'px'">
+                <div class="duel-players">
+                    <div class="duel-player">
+                        <div class="duel-player-info">
+                            <span class="duel-name" data-attr-id="'duel-name1-' + board.id">{{board.name1}}</span>
+                            <span class="duel-score" data-attr-id="'duel-score1-' + board.id">{{board.score1}}</span>
+                        </div>
+                        <img class="duel-portrait" data-attr-id="'duel-job1-' + board.id" data-attr-sprite="board.job1" />
+                    </div>
+                    <div class="duel-versus">
+                        <span class="duel-vs">VS</span>
+                        <span class="duel-round" data-attr-id="'duel-round-' + board.id">{{board.round}}/{{board.race_to}}</span>
+                    </div>
+                    <div class="duel-player second">
+                        <img class="duel-portrait" data-attr-id="'duel-job2-' + board.id" data-attr-sprite="board.job2" />
+                        <div class="duel-player-info">
+                            <span class="duel-name" data-attr-id="'duel-name2-' + board.id">{{board.name2}}</span>
+                            <span class="duel-score" data-attr-id="'duel-score2-' + board.id">{{board.score2}}</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="duel-time" data-attr-id="'duel-time-' + board.id" data-if="board.participant &amp;&amp; board.time != ''">{{board.time}}</span>
+            </div>
+        </div>
+    </body>
+</rml>

@@ -1,0 +1,37 @@
+label.custom
+{
+    display: inline-block;
+    text-align: center;
+    padding: 1dp 2dp 3dp 4dp;
+    width: 100dp;
+    height: 17dp;
+    decorator: tiled-horizontal( label-l, label-c, label-r );
+}
+
+label.custom-2
+{
+    display: inline-block;
+    text-align: center;
+    padding: 4dp 6dp;
+    width: 100dp;
+    height: 17dp;
+
+    decorator: tiled-box(
+        textbox-tb-tl, textbox-tb-t, textbox-tb-tr,
+        textbox-tb-l,  textbox-tb-c, textbox-tb-r,
+        textbox-tb-bl, textbox-tb-b, textbox-tb-br
+    );
+}
+
+label.text {
+    background-color: rgba(0, 0, 0, 120);
+    border-radius: 4dp;
+    width: 100%;
+    display: inline-block;
+    padding: 3dp;
+    box-sizing: border-box;
+}
+
+label.text > * {
+    vertical-align: middle;
+}

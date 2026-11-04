@@ -1,0 +1,26 @@
+<rml>
+    <head>
+        <title>Tooltip</title>
+        <link type="text/template" href="../templates/window-box.html" />
+        <link type="text/rcss" href="../styles/components.css" />
+        <style>
+            body { position: absolute; display: inline-block; width: auto; max-width: 340dp; max-height: 95vh; overflow: hidden auto; z-index: 10000; pointer-events: none; decorator: none; }
+            body.ui-tooltip-surface { padding: 4dp 6dp; line-height: 17dp; font-effect: none; }
+            .tooltip-line { display: block; min-height: 17dp; }
+            .tooltip-line img { width: 18dp; height: 18dp; vertical-align: middle; margin-left: 4dp; }
+            .tooltip-line .bold { font-weight: 820; }
+            .tooltip-line .small { font-size: 12dp; }
+            /* ===== ice theme: dark-blue tooltip like the minimap / chat ===== */
+            body#rich-tooltip.ui-tooltip-surface {
+                background: rgba(14, 32, 62, 235);
+                border: 1dp rgb(150, 190, 225);
+                border-radius: 6dp;
+                font-effect: outline(1dp rgb(8, 18, 36));
+            }
+            #rich-tooltip #window-content { decorator: none; background-color: rgba(0, 0, 0, 0); }
+        </style>
+        <link type="text/rcss" href="../styles/ice_sprites_dark.css" />
+        <link type="text/rcss" href="../styles/dark/com_tooltip.css" />
+    </head>
+    <body id="rich-tooltip" class="ui-tooltip-surface"><div id="tooltip-content"></div></body>
+</rml>
