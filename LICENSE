@@ -19,10 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-This license covers Arua's own work: its styling, art, scripts and the loot filter helper.
-The base interface files Arua is built on belong to Rednim Games (published at
-https://github.com/rednimgames/rose-public) and keep their own terms. The Nunito font is
-under the SIL Open Font License (font/nunito/OFL.txt in each theme).
