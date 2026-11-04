@@ -72,3 +72,8 @@ itself:
 - Base interface files: Rednim Games, published at
   [rednimgames/rose-public](https://github.com/rednimgames/rose-public). Arua is built on them.
 - Nunito font: SIL Open Font License (`font/nunito/OFL.txt` in each theme).
+
+## License
+
+Arua's own work is MIT licensed (see `LICENSE`). The base interface files from Rednim Games keep
+their own terms.
