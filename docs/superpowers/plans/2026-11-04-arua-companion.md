@@ -4,9 +4,9 @@
 
 **Goal:** A Windows app in the ROSE Online folder that edits loot lists (with item search), the target marker colour, the drop name style and the group / minimap / Party Bars defaults, and writes them into the installed Arua themes.
 
-**Architecture:** A Python package (`companion/arua_companion/`) holds all logic as pure, tested functions: loot filter (port of `arua_loot_filter.ps1`), generators for the generated theme files, a theme writer that replaces marked blocks with backups, settings persistence and item search. A pywebview window shows an HTML/CSS/JS interface in Arua's look and calls the Python `Api`. The Arua theme build (local workspace `C:\Users\nvspa\Desktop\Arua_themes`) gains settings blocks and two generated style sheets the app fills in. PyInstaller packs everything into `Arua Companion.exe`.
+**Architecture:** A Python package (`companion/arua_companion/`) holds all logic as pure, tested functions: loot filter (port of `arua_loot_filter.ps1`), generators for the generated theme files, a theme writer that replaces marked blocks with backups, settings persistence and item search. A pywebview window shows an HTML/CSS/JS interface in Arua's look and calls the Python `Api`. The Arua theme build (local workspace `C:\Users\nvspa\Desktop\Arua_themes`) gains settings blocks and two generated style sheets the app fills in. PyInstaller builds a folder (`Arua Companion\` with the exe, one-folder mode: starts instantly); `items.json` sits next to the exe as a plain file so a game patch only needs a new list.
 
-**Tech Stack:** Python 3.14, pywebview (Edge WebView2), pytest, PyInstaller (one-file, windowed); Pillow for exporting Arua art to PNG.
+**Tech Stack:** Python 3.14, pywebview (Edge WebView2), pytest, PyInstaller (one-folder, windowed); Pillow for exporting Arua art to PNG; urllib for the item list update.
 
 **Spec:** `docs/superpowers/specs/2026-11-04-arua-companion-design.md`
 
@@ -14,7 +14,7 @@
 
 - The ROSE archive keys and any ChaCha20 / VFS / BLAKE3 decryption code never enter `C:\Users\nvspa\Desktop\Arua_repo` (no file, no commit, no build input). The item extractor lives only in `C:\Users\nvspa\Desktop\Arua_themes\tools\items\`. Only `companion/data/items.json` (plain names) is shipped.
 - Writes only to: `<game>\data\ui\themes\arua_*\` (folders with a `theme.toml`), `<game>\loot_filter.txt`, `<game>\loot_filter_profiles.txt`, `<game>\arua_companion.json`, `<game>\arua_companion_backup\`.
-- Never touch the game process. No network.
+- Never touch the game process. Network only when the player clicks "Update item list" (one GET of `https://raw.githubusercontent.com/griff-gg/Arua/main/companion/data/items.json`).
 - Inline Lua written into theme files contains no `<` or `&`; strings use `\ddd` escapes (same as `ConvertTo-LuaString` in `arua_loot_filter.ps1`).
 - Loot files keep their existing format (`yellow=a, b` lines; profiles `active=Name` + `[Name]` sections).
 - Every changed file gets a backup copy before it is written.
@@ -242,6 +242,8 @@ def test_can_write(tmp_path):
   - `items.json` format: `{"patch": "2026-11-03", "items": [{"name": "Pink Powder", "cat": "material"}, ...]}`, sorted by name, unique by (name, cat). Categories: weapon, subweapon, cap, body, arms, foot, back, face, jewel, consumable, gem, material, quest, pat (from list_weapon, list_subwpn, list_cap, list_body, list_arms, list_foot, list_back, list_faceitem, list_jewel, list_useitem, list_gemitem, list_natural, list_questitem, list_pat).
   - `load_items(path: Path) -> list[dict]`
   - `search(items: list[dict], query: str, limit: int = 20) -> list[dict]` — case-insensitive substring; fewer than 2 non-space characters → `[]`; names that start with the query come first, then the rest, each group alphabetical.
+  - `ITEMS_URL = 'https://raw.githubusercontent.com/griff-gg/Arua/main/companion/data/items.json'`
+  - `update_items(dest: Path, fetch=urllib_fetch) -> tuple[bool, str]` — downloads `ITEMS_URL`, checks it parses and has `"items"` with at least 1000 entries, then replaces `dest` (write to `dest.with_suffix('.tmp')`, then `os.replace`). Returns `(True, 'Item list updated: N items (patch P).')` or `(False, 'Could not update the item list: <reason>. The current list is kept.')`; never leaves a broken file. `fetch(url) -> bytes` is injectable for tests.
 
 - [ ] **Step 1: Write `export_items.py` (local).** It imports `vfs.VFS` and `stb_parser.parse_stb_at` from its own folder, reads the 14 tables, takes column 0, strips, drops empty names, and writes `items.json` to the path given as its only argument. Run it: `python C:\Users\nvspa\Desktop\Arua_themes\tools\items\export_items.py companion\data\items.json`. Expected: about 18,600 items; `"Hime"`, `"Ice Key Fragment"`, `"Wooden Sword"` present.
 - [ ] **Step 2: Check the repo stays clean** — `git ls-files | findstr /I "vfs chacha blake stb_parser export_items"` must print nothing; `findstr /S /I /M "chacha expand blake3 data.idx" companion\*` must print nothing.
@@ -259,6 +261,7 @@ def test_shipped_list_has_known_names():
     names = {i['name'] for i in load_items(Path(__file__).resolve().parents[1] / 'data' / 'items.json')}
     assert {'Hime', 'Ice Key Fragment', 'Astarot Feather', 'Wooden Sword'} <= names
 ```
+- Extra tests: `test_update_items_replaces_file` (fake fetch returns a valid list of 1000+ items → file replaced, message has the count) and `test_update_items_keeps_old_on_error` (fake fetch raises `OSError('offline')` or returns `b'{}'` → returns False, old file unchanged).
 - [ ] **Step 4: Run, implement `items.py`, run again** → PASS.
 - [ ] **Step 5: Commit** — `git add companion/data/items.json companion/arua_companion/items.py companion/tests/test_items.py && git commit -m "Companion: item list and search"`
 
@@ -313,13 +316,14 @@ def test_shipped_list_has_known_names():
 - Produces: `class Api` (exposed to JS as `window.pywebview.api`), constructed with `game: Path`:
   - `get_state() -> dict` — `{"settings": asdict(Settings), "lists": {...six colours..., "only_filtered", "dim_others", "name_size"}, "profiles": {"items": [{"name", "lists"}], "active"}, "themes": [names], "game": str}`
   - `search(query: str) -> list[dict]`
+  - `update_item_list() -> dict` — `{"ok": bool, "message": str}` from `update_items(<app folder>/items.json)`; reloads the list on success.
   - `save(state: dict) -> dict` — `{"ok": bool, "message": str, "skipped": [..]}`; ok message is exactly the Global Constraints text; error → the `SaveReport.error` text.
   - `main()` — game folder = folder of the running exe (or `--game <path>` for development); if `can_write` fails, relaunch elevated once via `ctypes.windll.shell32.ShellExecuteW(None, 'runas', sys.executable, args, None, 1)`; if refused, the window still opens and Save shows "Windows did not allow writing to the game folder. Nothing was changed."; window title `Arua Companion`, size 900×640, not resizable below 760×560.
 - Screens (one window, three tabs in Arua tab style; selected tab gold):
   1. **Loot filter** — search box (results under it: name + category, six colour dots per result, click a dot = add to that list); the six lists as removable name pills in their colour; profile row (pills, active = gold; buttons New, Rename, Delete); modes: Only show filtered drops, Dim other drops, name size Normal / Bigger / Big.
   2. **Markers & drops** — marker colour Red / Blue / Green (show the sprite); drop names: Dark box (check), Black outline (check), Opacity 100 / 75 / 50.
   3. **Group & minimap** — Buff rows 1/2/3, Columns Auto/2, Class icons on/off, Minimap size slider 190–300, Party Bars Normal / Faded.
-  - Footer: Save button (gold), status text line under it.
+  - Footer: Save button (gold), status text line under it. On the Loot filter tab, an "Update item list" button next to the search box (shows the list's patch date).
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -346,9 +350,9 @@ def test_search_through_api(fake_game):
 **Files:**
 - Create: `companion/build_exe.ps1`
 - Modify: `README.md` (new section "Arua Companion" replacing the helper as the main way; keep the helper section as "without the app"), `CHANGELOG.md` (0.2.0 entry), `VERSION` (`0.2.0`)
-- Output: `game-folder/Arua Companion.exe`
+- Output: `game-folder/Arua Companion/` (exe + parts + `items.json`)
 
-- [ ] **Step 1:** `build_exe.ps1` runs `python -m PyInstaller --noconfirm --onefile --windowed --name "Arua Companion" --add-data "ui;ui" --add-data "data;data" arua_companion/app.py` from `companion\` and copies `dist\Arua Companion.exe` to `..\game-folder\`. Expected: the exe exists, about 15–30 MB.
-- [ ] **Step 2: Check by hand:** copy the exe into `C:\Program Files\ROSE Online\`, double-click: Windows asks for permission once, the window opens, Save works, start the game: marker colour, drop style, buff rows and minimap size are as saved; exit the game cleanly (no crash dump in `%LOCALAPPDATA%\Rednim Games\ROSE Online\data\sentry\reports`).
+- [ ] **Step 1:** `build_exe.ps1` runs `python -m PyInstaller --noconfirm --onedir --windowed --name "Arua Companion" --add-data "ui;ui" arua_companion/app.py` from `companion\`, copies `data\items.json` next to the exe (`dist\Arua Companion\items.json`), and copies the whole `dist\Arua Companion\` folder to `..\game-folder\Arua Companion\`. The app reads `items.json` from its own folder (fallback: bundled `data\items.json` when run from source). Expected: `game-folder\Arua Companion\Arua Companion.exe` starts in under a second.
+- [ ] **Step 2: Check by hand:** copy the `Arua Companion` folder into `C:\Program Files\ROSE Online\`, double-click the exe: Windows asks for permission once, the window opens, Save works, start the game: marker colour, drop style, buff rows and minimap size are as saved; exit the game cleanly (no crash dump in `%LOCALAPPDATA%\Rednim Games\ROSE Online\data\sentry\reports`).
 - [ ] **Step 3: Secret scan before commit** — `findstr /S /I /M "chacha expand blake3 data.idx rose.vfs" game-folder\* companion\*` prints nothing (the exe included).
 - [ ] **Step 4: Commit locally** — `git commit -m "Arua 0.2.0: Arua Companion"`. Push only after griff_gg says yes.
