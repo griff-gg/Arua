@@ -56,3 +56,16 @@ def test_update_items_keeps_old_on_error(tmp_path):
         assert not ok and msg.startswith('Could not update the item list: ') and msg.endswith('. The current list is kept.')
         assert dest.read_bytes() == before
     assert not (tmp_path / 'items.tmp').exists()
+
+
+def test_search_hides_names_the_filter_cannot_match():
+    items = [{'name': 'Kurara "Hey, Girl!" Backpack', 'cat': 'back'}, {'name': 'Atk Power, Accuracy Up (All)', 'cat': 'consumable'},
+             {'name': 'Hey Hat', 'cat': 'cap'}, {'name': 'Back' + chr(92) + 'slash', 'cat': 'cap'}]
+    assert [i['name'] for i in search(items, 'hey')] == ['Hey Hat']
+    assert search(items, 'atk power') == [] and search(items, 'slash') == []
+
+
+def test_shipped_list_search_never_returns_commas_or_quotes():
+    items = load_items(DATA)
+    for q in ('hey', 'atk power', 'shirt', 'feet'):
+        assert all(',' not in i['name'] and '"' not in i['name'] for i in search(items, q, limit=500))

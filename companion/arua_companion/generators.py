@@ -58,11 +58,13 @@ def drops_css(s: Settings, names: list[str]) -> str:
         body.append('opacity: %s;' % ('0.75' if s.drop_opacity == 75 else '0.5'))
     if body:
         rows.append(root + ' { ' + ' '.join(body) + ' }')
-    if s.drop_opacity < 100:
+    # listed (glowing) names keep their own look: no box, full opacity
+    reset = (['background-color: rgba(0, 0, 0, 0);'] if s.drop_box else []) + (['opacity: 1;'] if s.drop_opacity < 100 else [])
+    if reset:
         for n in names:
             n = re.sub(r'["\\]', '', n)
             if n:
-                rows.append(f'{root}[lf-name="{n}"] {{ opacity: 1; }}')
+                rows.append(f'{root}[lf-name="{n}"] {{ ' + ' '.join(reset) + ' }')
     return '\n'.join(rows) + '\n'
 
 

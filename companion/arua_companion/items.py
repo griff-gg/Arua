@@ -23,12 +23,19 @@ def list_patch(path: Path) -> str:
         return ''
 
 
+def filter_can_match(name: str) -> bool:
+    """Loot lists are comma separated and the rules drop quotes / backslashes: such names can never glow."""
+    return not any(ch in name for ch in (',', '"', chr(92)))
+
+
 def search(items: list[dict], query: str, limit: int = 20) -> list[dict]:
     q = (query or '').strip().lower()
     if len(q.replace(' ', '')) < 2:
         return []
     first, rest = [], []
     for i in items:
+        if not filter_can_match(i['name']):
+            continue
         n = i['name'].lower()
         if n.startswith(q):
             first.append(i)

@@ -31,6 +31,10 @@ function syncProfile() {
 function addName(name, color) {
   name = name.trim();
   if (!name) return;
+  if (/[,"\\]/.test(name)) {   // lists are comma separated and the glow rules drop quotes: it could never match
+    setStatus('Names with a comma, quote or backslash cannot be used in loot lists.', 'bad');
+    return;
+  }
   COLORS.forEach((c) => { state.lists[c] = join(split(state.lists[c]).filter((n) => n !== name)); });
   state.lists[color] = join(split(state.lists[color]).concat([name]));
   syncProfile();

@@ -31,7 +31,7 @@ def test_drops_defaults_are_empty_look():
 def test_drops_box_no_outline_half():
     css = drops_css(Settings(drop_box=True, drop_outline=False, drop_opacity=50), ['Pink Powder'])
     assert 'opacity: 0.5' in css and 'font-effect: none' in css and 'background-color: rgba(10, 18, 32, 200)' in css
-    assert '.dropped-item[lf-name="Pink Powder"] { opacity: 1; }' in css
+    assert '.dropped-item[lf-name="Pink Powder"] { background-color: rgba(0, 0, 0, 0); opacity: 1; }' in css
 
 
 def test_drops_names_are_cleaned():
@@ -63,3 +63,14 @@ def test_settings_roundtrip(tmp_path):
     s = Settings(marker='green', drop_box=True, group_rows=2, party_bars='faded')
     save_settings(tmp_path / 's.json', s)
     assert load_settings(tmp_path / 's.json') == s
+
+
+def test_drops_box_not_behind_listed_names():
+    css = drops_css(Settings(drop_box=True), ['Pink Powder'])
+    assert '.dropped-item[lf-name="Pink Powder"] { background-color: rgba(0, 0, 0, 0); }' in css
+    assert 'opacity: 1' not in css   # opacity reset only when opacity < 100
+
+
+def test_drops_box_and_opacity_reset_together():
+    css = drops_css(Settings(drop_box=True, drop_opacity=50), ['Pink Powder'])
+    assert '.dropped-item[lf-name="Pink Powder"] { background-color: rgba(0, 0, 0, 0); opacity: 1; }' in css
