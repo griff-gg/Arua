@@ -12,6 +12,7 @@ from .settings import _clean, load_settings
 from .themes import can_write, find_arua_themes
 
 WIDTH, HEIGHT = 940, 684
+OUTLINE = '#265b97'   # the frame art's outer outline colour
 SAVED = 'Saved. Restart the game, or press Ctrl+F5 in game to reload the UI.'
 
 
@@ -109,13 +110,29 @@ def main(argv: list[str] | None = None) -> None:
         if _relaunch_elevated([a for a in argv if a != '--elevated']):
             return
     api = Api(game)
-    # no Windows title bar: the page draws the Arua frame (title band drags, X closes) with see-through
-    # margins so the corner flourishes can stick out past the frame like in game
+    # no Windows title bar: the page draws the Arua frame (title band drags, X closes). The window is cut
+    # to the frame + flourish shape, so nothing shows around it (edge pixels blend into the frame outline).
     window = webview.create_window('Arua Companion', str(ui_dir() / 'index.html'), js_api=api,
                                    width=WIDTH, height=HEIGHT, resizable=False, frameless=True,
-                                   easy_drag=False, transparent=True, shadow=False)
+                                   easy_drag=False, shadow=False, background_color=OUTLINE)
     api.attach(window)
+    window.events.shown += lambda: _shape(window)
     webview.start()
+
+
+def _shape(window) -> None:
+    """Cut the shown window to the Arua frame shape; on any failure it simply stays a rectangle."""
+    try:
+        import ctypes
+        from ctypes import wintypes
+        from .shape import apply_shape, window_mask
+        hwnd = int(window.native.Handle.ToInt64())
+        rect = wintypes.RECT()
+        ctypes.windll.user32.GetClientRect(hwnd, ctypes.byref(rect))
+        scale = ctypes.windll.user32.GetDpiForWindow(hwnd) / 96 or 1.0
+        apply_shape(hwnd, window_mask(round(rect.right / scale), round(rect.bottom / scale), scale))
+    except Exception:
+        pass
 
 
 if __name__ == '__main__':
