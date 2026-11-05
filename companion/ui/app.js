@@ -52,6 +52,8 @@ function removeName(name, color) {
 function renderLists() {
   const box = $('lists');
   box.replaceChildren();
+  $('lists-of').textContent = state.profiles.active
+    ? `(profile ${state.profiles.active}; rarer colour wins, × removes)` : '(rarer colour wins, × removes)';
   COLORS.forEach((c) => {
     const row = el('div', 'list');
     row.append(el('span', 'lname ' + c, LABEL[c]));
@@ -89,12 +91,14 @@ function onSearch() {
     const q = $('search').value;
     const box = $('results');
     box.replaceChildren();
+    box.hidden = true;
     if (q.trim().length < 2) return;
     const found = await api.search(q);
     found.forEach((i) => box.append(resultRow(i.name, i.cat)));
     if (!found.some((i) => i.name.toLowerCase() === q.trim().toLowerCase())) {
       box.append(resultRow(q.trim(), 'as typed'));   // names not in the list can still be added
     }
+    box.hidden = false;
   }, 120);
 }
 
@@ -173,6 +177,12 @@ function wire() {
     };
   });
   $('search').addEventListener('input', onSearch);
+  $('search').addEventListener('focus', () => { if ($('results').children.length) $('results').hidden = false; });
+  $('search').addEventListener('keydown', (e) => { if (e.key === 'Escape') $('results').hidden = true; });
+  document.addEventListener('mousedown', (e) => {
+    if (!e.target.closest('.box.search')) $('results').hidden = true;
+  });
+  $('close').onclick = () => api.close();
   $('only').onchange = (e) => { state.lists.only_filtered = e.target.checked; };
   $('dim').onchange = (e) => { state.lists.dim_others = e.target.checked; };
   $('drop-box').onchange = (e) => { state.settings.drop_box = e.target.checked; renderPreview(); };
@@ -189,6 +199,7 @@ function wire() {
     state.profiles.active = name;
     $('profile-name').value = '';
     renderProfiles();
+    renderLists();
     setStatus(`Profile ${name} saved in the list. Press Save to keep it.`);
   };
   $('profile-del').onclick = () => {
@@ -197,6 +208,7 @@ function wire() {
     state.profiles.items = state.profiles.items.filter((p) => p.name !== name);
     state.profiles.active = null;
     renderProfiles();
+    renderLists();
     setStatus(`Profile ${name} deleted. Press Save to keep it.`);
   };
   $('update-items').onclick = async () => {

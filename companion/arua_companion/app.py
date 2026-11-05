@@ -11,6 +11,7 @@ from .lootfilter import COLORS, Lists, Profile, Profiles, read_lists, read_profi
 from .settings import _clean, load_settings
 from .themes import can_write, find_arua_themes
 
+WIDTH, HEIGHT = 940, 684
 SAVED = 'Saved. Restart the game, or press Ctrl+F5 in game to reload the UI.'
 
 
@@ -34,6 +35,18 @@ class Api:
         self._items_path = Path(items_path) if items_path else default_items()
         self._fetch = fetch
         self._items = load_items(self._items_path)
+        self._window = None
+
+    def attach(self, window) -> None:
+        self._window = window
+
+    def close(self) -> None:
+        if self._window:
+            self._window.destroy()
+
+    def minimize(self) -> None:
+        if self._window:
+            self._window.minimize()
 
     def get_state(self) -> dict:
         lists = read_lists(self._game / 'loot_filter.txt')
@@ -96,8 +109,12 @@ def main(argv: list[str] | None = None) -> None:
         if _relaunch_elevated([a for a in argv if a != '--elevated']):
             return
     api = Api(game)
-    webview.create_window('Arua Companion', str(ui_dir() / 'index.html'), js_api=api,
-                                   width=900, height=640, min_size=(760, 560), background_color='#0e203e')
+    # no Windows title bar: the page draws the Arua frame (title band drags, X closes) with see-through
+    # margins so the corner flourishes can stick out past the frame like in game
+    window = webview.create_window('Arua Companion', str(ui_dir() / 'index.html'), js_api=api,
+                                   width=WIDTH, height=HEIGHT, resizable=False, frameless=True,
+                                   easy_drag=False, transparent=True, shadow=False)
+    api.attach(window)
     webview.start()
 
 

@@ -47,3 +47,24 @@ def test_update_item_list_offline_keeps_list(fake_game, tmp_path):
     r = api.update_item_list()
     assert r['ok'] is False and 'offline' in r['message']
     assert api.search('hime')
+
+
+class FakeWindow:
+    def __init__(self):
+        self.calls = []
+
+    def destroy(self):
+        self.calls.append('destroy')
+
+    def minimize(self):
+        self.calls.append('minimize')
+
+
+def test_close_and_minimize_use_the_window(fake_game):
+    api = Api(fake_game, items_path=DATA)
+    api.close()                       # no window yet: nothing to do, no error
+    w = FakeWindow()
+    api.attach(w)
+    api.minimize()
+    api.close()
+    assert w.calls == ['minimize', 'destroy']
