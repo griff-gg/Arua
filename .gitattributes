@@ -10,3 +10,7 @@
 *.tga binary
 *.png binary
 *.ttf binary
+*.exe binary
+*.dll binary
+*.pyd binary
+*.zip binary

@@ -15,28 +15,49 @@ Made by **griff_gg**. Built for the ROSE Online patch of **3 November 2026**.
    them in place the default theme breaks after the patch.
 3. Copy the three folders from `themes\` into `ROSE Online\data\ui\themes\`:
    `arua_ice`, `arua_dark`, `arua_midnight`.
-4. Copy the two files from `game-folder\` into the `ROSE Online` folder itself (the one with
-   `trose.exe`): `Arua Loot Filter.bat` and `arua_loot_filter.ps1`.
+4. Copy the `Arua Companion` folder from `game-folder\` into the `ROSE Online` folder itself (the one
+   with `trose.exe`). Updating from 0.1.0? You can delete `Arua Loot Filter.bat` and
+   `arua_loot_filter.ps1` there: the Companion replaces them.
 5. Start the game, open **Options > Interface > Theme** and pick **Arua Ice**, **Arua Dark** or
    **Arua Midnight**.
 
 The game remembers the theme. To go back to the original look, pick **ROSE**.
+
+## Arua Companion
+
+Since the 3 November 2026 patch the game's UI can no longer save settings, so Arua has a small
+settings app: **ROSE Online\Arua Companion\Arua Companion.exe** (tip: right-click it > Pin to taskbar, or
+make a desktop shortcut). Open it (outside the game or while it runs), change what you like and press
+**Save**. Then restart the game, or press **Ctrl+F5** in game
+to reload the UI.
+
+- **Loot filter**: search all item names, click a colour dot to add an item to that list, remove names,
+  Only show filtered drops / Dim other drops, filtered name size. **Profiles**: click one to load its
+  lists; edits only change the lists until you press **Save changes** (into the selected profile) or
+  **New** (a new profile with the name you typed).
+- **Markers & drops**: target marker colour (red / blue / green); drop names that are not in your lists:
+  dark box behind the name, black outline, opacity 100 / 75 / 50 %.
+- **Group & minimap**: buff rows, columns, class icons, minimap size, Party Bars (normal / faded).
+
+It writes into every installed Arua theme and keeps a copy of each file it changes in
+`ROSE Online\arua_companion_backup\`. The first time, Windows may ask for permission to write into the
+game folder. **Update item list** downloads the newest item list from this repository (only when you
+click it); the app never touches the running game.
 
 ## Loot filter
 
 Listed drops get a coloured glow, a bigger name and a light beam. Six lists, by rarity: Yellow, Blue,
 Purple, Red, Green and Rainbow (the rarer colour wins if a name is in two lists).
 
-- **Your lists** live in `loot_filter.txt` in the ROSE Online folder (and profiles in
-  `loot_filter_profiles.txt`). Edit them in Notepad, then double-click **Arua Loot Filter.bat** and
-  restart the game. The first time, it creates `loot_filter.txt` with short instructions.
-  If the game is in Program Files, Windows asks for permission to write there.
+- **Your lists** are made in the **Arua Companion** and saved in `loot_filter.txt` and
+  `loot_filter_profiles.txt` in the ROSE Online folder.
 - **In game** (Options > Loot Filter) you can switch profiles, Dim other drops, Only show filtered
   drops and the name size at once. You can also add names there: they work right away, but only for
-  that session. To keep them, put them in `loot_filter.txt` and run the helper again.
+  that session. To keep them, add them in the Companion and press Save.
 - Saved lists cost nothing while you play. Names you add in game for the session use a small timer
   that marks matching drops; it stops when you switch back to a saved profile or restart.
-- Run **Arua Loot Filter.bat** again after you install a new Arua version.
+- After installing a new Arua version, open the Companion and press **Save** once: it writes your lists
+  and settings into the new theme files.
 
 ## What's in it
 
@@ -56,15 +77,24 @@ Purple, Red, Green and Rainbow (the rarer colour wins if a name is in two lists)
 The 3 November 2026 patch removed file access from UI scripts, so the UI can no longer save settings
 itself:
 
-- Group buff rows / columns, class icons on/off and the minimap size reset when you restart.
-- Loot filter lists are saved with the helper (see above), not from the Options window.
+- Group buff rows / columns, class icons on/off and the minimap size changed in game reset when you
+  restart; set your defaults in the **Arua Companion**.
+- Loot filter lists are saved with the Companion (see above), not from the Options window.
 - The element icon and DPS meter on the target bar are always on.
+
+## Crash when closing the game
+
+The game can crash when you close it if it **started** with a custom theme selected (any theme in
+`data\ui\themes`, also an unchanged copy of the default one). It is a bug in the game client, not in
+Arua: the ROSE team has reproduced it. Until it is fixed: switching the theme once during a session
+(or logging out to character select and back in) avoids it for that session.
 
 ## Files
 
 - `themes\arua_ice`, `themes\arua_dark`, `themes\arua_midnight`: the three themes. Each is a complete
   theme folder, as the game requires.
-- `game-folder\`: the loot filter helper (PowerShell, built into Windows; nothing to install).
+- `game-folder\`: the Arua Companion app.
+- `companion\`: the Companion's source (Python + pywebview), tests and the item-name list (`data\items.json`).
 
 ## Credits
 

@@ -1,5 +1,20 @@
 # Arua changelog
 
+## 0.2.0 – 2026-11-05
+
+- New: **Arua Companion**, a settings app in the ROSE Online folder (`Arua Companion\Arua Companion.exe`):
+  loot lists with item search (all game item names), colours and profiles; target marker colour; drop name
+  box / outline / opacity; group buff rows, columns, class icons, minimap size and Party Bars defaults.
+  Saves into every installed Arua theme (with backups); Ctrl+F5 in game reloads the UI.
+  The window is the Arua frame itself (no Windows title bar; drag the title band, X in the frame).
+  Profiles: click one to load it; edits only change a profile when you press Save changes or New.
+- Themes: settings blocks for the group window and minimap, and a drop name style sheet, filled in by
+  the Companion. The Loot Filter tab in game now points to the Companion.
+- Removed: the `Arua Loot Filter.bat` helper (the Companion does the same and more). Delete
+  `Arua Loot Filter.bat` and `arua_loot_filter.ps1` from your ROSE Online folder.
+- Known issue (game client, not Arua): the game can crash on close when it started with a custom theme
+  selected. Switching theme once per session avoids it. Reported to and reproduced by the ROSE team.
+
 ## 0.1.0 – 2026-11-04
 
 First release for the ROSE Online patch of 3 November 2026.

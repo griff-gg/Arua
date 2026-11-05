@@ -1,0 +1,9 @@
+yellow=Pink Powder, Knight's Sword
+blue=Salt & Pepper <Rare>
+purple=Épée Longue
+red=
+green=Golden Feather
+rainbow=
+only_filtered=0
+dim_others=1
+name_size=1

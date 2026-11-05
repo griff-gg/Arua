@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arua Companion</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<!-- the window has no Windows title bar: this frame is the window. Measurements follow the game's
+     ice_window.css (frame padding 6, title band 40, flourishes placed against the inner panel). -->
+<div class="window">
+  <div class="frame nine">
+    <div class="n tl"></div><div class="n t"></div><div class="n tr"></div>
+    <div class="n l"></div><div class="n c"></div><div class="n r"></div>
+    <div class="n bl"></div><div class="n b"></div><div class="n br"></div>
+  </div>
+  <div class="titlebar pywebview-drag-region"><span class="title">Arua Companion</span></div>
+  <button class="close" id="close" title="Close"></button>
+
+  <div class="content">
+    <div class="panel nine">
+      <div class="n tl"></div><div class="n t"></div><div class="n tr"></div>
+      <div class="n l"></div><div class="n c"></div><div class="n r"></div>
+      <div class="n bl"></div><div class="n b"></div><div class="n br"></div>
+    </div>
+    <div class="body">
+      <nav class="tabs" id="tabs">
+        <button class="tab sel" data-tab="loot">Loot filter</button>
+        <button class="tab" data-tab="look">Markers &amp; drops</button>
+        <button class="tab" data-tab="group">Group &amp; minimap</button>
+      </nav>
+
+      <section id="tab-loot" class="page loot">
+        <div class="side">
+          <div class="box">
+            <h3>Profiles</h3>
+            <div id="profiles" class="plist"></div>
+            <div class="row">
+              <input id="profile-name" type="text" placeholder="New profile name" maxlength="20">
+              <button id="profile-new" class="pill small" title="Save the lists below as a new profile">New</button>
+            </div>
+            <div class="row">
+              <button id="profile-save" class="pill small" title="Save the lists below into the selected profile">Save changes</button>
+              <button id="profile-del" class="pill small danger">Delete</button>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Modes</h3>
+            <label class="check"><input type="checkbox" id="only"><span></span>Only filtered drops</label>
+            <label class="check"><input type="checkbox" id="dim"><span></span>Dim other drops (50%)</label>
+            <div class="label small">Filtered name size</div>
+            <div class="seg" id="size"><button data-v="0">Normal</button><button data-v="1">Bigger</button><button data-v="2">Big</button></div>
+          </div>
+        </div>
+
+        <div class="main">
+          <div class="box search">
+            <div class="row">
+              <input id="search" type="text" placeholder="Search an item to add (2+ letters)…" autocomplete="off">
+              <button id="update-items" class="pill small" title="Download the newest item list from the Arua repo">Update item list</button>
+            </div>
+            <div class="hint" id="items-info"></div>
+            <div id="results" hidden></div>
+          </div>
+          <div class="box lists">
+            <h3>Lists <span class="hint" id="lists-of"></span></h3>
+            <div id="lists"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-look" class="page" hidden>
+        <div class="box">
+          <h3>Target marker <span class="hint">(arrows next to a selected player's name)</span></h3>
+          <div class="row" id="markers">
+            <button class="card" data-v="red"><img src="art/marker-red.png" alt=""><img class="flip" src="art/marker-red.png" alt=""><span>Red</span></button>
+            <button class="card" data-v="blue"><img src="art/marker-blue.png" alt=""><img class="flip" src="art/marker-blue.png" alt=""><span>Blue</span></button>
+            <button class="card" data-v="green"><img src="art/marker-green.png" alt=""><img class="flip" src="art/marker-green.png" alt=""><span>Green</span></button>
+          </div>
+        </div>
+        <div class="box">
+          <h3>Drop names <span class="hint">(drops that are not in your lists)</span></h3>
+          <label class="check"><input type="checkbox" id="drop-box"><span></span>Dark box behind the name</label>
+          <label class="check"><input type="checkbox" id="drop-outline"><span></span>Black outline on the text</label>
+          <div class="row"><span class="label">Opacity</span>
+            <div class="seg" id="opacity"><button data-v="100">100%</button><button data-v="75">75%</button><button data-v="50">50%</button></div>
+          </div>
+          <div class="preview"><span id="drop-preview">Blue Stone</span><span class="lf">Pink Powder</span></div>
+        </div>
+      </section>
+
+      <section id="tab-group" class="page" hidden>
+        <div class="box">
+          <h3>Group window</h3>
+          <div class="row"><span class="label">Buff rows</span>
+            <div class="seg" id="rows"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button></div></div>
+          <div class="row"><span class="label">Columns</span>
+            <div class="seg" id="columns"><button data-v="0">Auto</button><button data-v="2">2</button></div></div>
+          <label class="check"><input type="checkbox" id="class-icons"><span></span>Class icons next to members</label>
+        </div>
+        <div class="box">
+          <h3>Minimap</h3>
+          <div class="row"><span class="label">Size</span>
+            <input type="range" id="minimap" min="190" max="300" step="5"><span class="value" id="minimap-v"></span></div>
+        </div>
+        <div class="box">
+          <h3>Party bars <span class="hint">(HP / MP bars over group members' heads)</span></h3>
+          <div class="seg" id="bars"><button data-v="normal">Normal</button><button data-v="faded">Faded (25%)</button></div>
+        </div>
+      </section>
+
+      <footer>
+        <button id="save" class="pill gold">Save</button>
+        <div id="status" class="status"></div>
+      </footer>
+    </div>
+    <img class="fx fx-tl" src="art/corner-tl.png" alt="">
+    <img class="fx fx-br" src="art/corner-br.png" alt="">
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

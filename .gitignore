@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+companion/.pytest_tmp/
+companion/build/
+companion/dist/
+companion/*.spec
+.superpowers/
