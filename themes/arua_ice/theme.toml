@@ -1,8 +1,4 @@
 name = "Arua Ice"
 
-# Nunito family. Emoji and CJK fallback faces are built into the client.
-[[fonts]]
-file = "font/nunito/Nunito-VariableFont_wght.ttf"
-
-[[fonts]]
-file = "font/nunito/Nunito-Italic-VariableFont_wght.ttf"
+# No font list on purpose: loading theme fonts at game start crashes the game on exit.
+# The game uses its built-in Nunito instead.

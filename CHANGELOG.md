@@ -8,6 +8,9 @@
   Saves into every installed Arua theme (with backups); Ctrl+F5 in game reloads the UI.
 - Themes: settings blocks for the group window and minimap, and a drop name style sheet, filled in by
   the Companion.
+- Fixed: the game crashing on exit when it was started with an Arua theme selected. A theme that loads
+  its own font files at game start triggers this crash in the game (also with Rednim's unchanged theme
+  files), so the Arua themes now use the game's built-in Nunito. Very heavy text is drawn at Bold.
 
 ## 0.1.0 – 2026-11-04
 
