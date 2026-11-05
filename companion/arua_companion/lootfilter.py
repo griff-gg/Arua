@@ -1,5 +1,6 @@
-"""Loot filter files and generated theme parts. A port of game-folder/arua_loot_filter.ps1:
-same input files, byte-identical lf_rules.css and ARUA-LF-DATA block."""
+"""Loot filter files and generated theme parts (first written as a port of the old PowerShell helper,
+so the files match what 0.1.0 wrote): loot_filter.txt, loot_filter_profiles.txt, lf_rules.css and the
+ARUA-LF-DATA block."""
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -223,7 +224,7 @@ def build_lf_data(lists: Lists, profiles: Profiles) -> str:
     if lists.name_size is not None:
         modes += f'name_size = {lists.name_size}, '
     active = lua_string(profiles.active) if profiles.active and profiles.get(profiles.active) else 'nil'
-    rows = ['-- ARUA-LF-DATA-BEGIN (written by "Arua Loot Filter.bat" from loot_filter.txt; do not edit by hand)',
+    rows = ['-- ARUA-LF-DATA-BEGIN (written by Arua Companion; do not edit by hand)',
             'local LF_DATA = {',
             '    lists = ' + _lua_lists(lists.colors(), modes) + ',',
             '    profiles = {']

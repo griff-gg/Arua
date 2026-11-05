@@ -77,7 +77,8 @@ input { user-select: text; }
 .box.search { position: relative; z-index: 30; }
 .box.lists { flex: 1; overflow-y: auto; margin-bottom: 0; }
 .plist { display: flex; flex-direction: column; gap: 4px; max-height: 190px; overflow-y: auto; margin-bottom: 6px; }
-.side input[type=text] { width: 100%; flex: none; }
+.side input[type=text] { min-width: 0; flex: 1; }
+.side #profile-new { flex: none; }
 .side .row { margin-bottom: 0; }
 .label.small { min-width: 0; margin: 8px 0 4px; font-size: 13px; }
 .side .seg button { padding: 0 10px; flex: 1; }

@@ -96,7 +96,7 @@ function LF.load_profiles()
     return list, by, active
 end
 
--- ARUA-LF-DATA-BEGIN (written by "Arua Loot Filter.bat" from loot_filter.txt; do not edit by hand)
+-- ARUA-LF-DATA-BEGIN (written by Arua Companion; do not edit by hand)
 local LF_DATA = nil
 -- ARUA-LF-DATA-END
 if LF_DATA then
@@ -275,7 +275,7 @@ local function fill()
     if only then set_checked(only, lists.only_filtered == true) end
     local dim = el('lf-dim')
     if dim then set_checked(dim, lists.dim_others == true) end
-    if not LF.io_ok then status('Changes here apply at once, for this session. To keep lists: edit loot_filter.txt in the ROSE Online folder and run Arua Loot Filter.bat.', nil) end
+    if not LF.io_ok then status('Changes here apply at once, for this session. To keep lists: use Arua Companion (ROSE Online folder) and press Save.', nil) end
 end
 
 -- push lists + modes straight into the drop labels window (this session; the UI cannot write files)
@@ -339,7 +339,7 @@ el('lf-save'):AddEventListener('click', function()
         LF.save_profiles(plist, pby, pactive)
     end
     local done = (pactive and ('Applied, profile ' .. pactive .. ' updated for this session.') or 'Applied for this session.')
-        .. ' To keep it after a restart: put it in loot_filter.txt and run Arua Loot Filter.bat.'
+        .. ' To keep it after a restart: add it in Arua Companion and press Save.'
     save_and_apply(lists, done)
 end)
 
@@ -490,7 +490,7 @@ el('lf-prof-del'):AddEventListener('click', function()
     save_and_apply(LF.load(), 'Deleted profile ' .. gone .. '. The lists in the boxes are unchanged.')
 end)
 
--- this session's lists / profiles / modes (start: what Arua Loot Filter.bat wrote). The UI cannot write files.
+-- this session's lists / profiles / modes (start: what Arua Companion saved). The UI cannot write files.
 local SES = { lists = LF.load() }
 do SES.plist, SES.pby, SES.active = LF.load_profiles() end
 local function copy(t)
@@ -2627,9 +2627,9 @@ end)
                         <p><b>Colours:</b> the lists follow item rarity, from Yellow (normal) up to Green, with Rainbow on top. If a name is in two lists, the rarer colour wins.</p>
                         <p class="lf-warn">Keep Game &gt; Show dropped item name switched on. When the game hides drop names, it also stops updating them, so the filter has nothing to work with. Use Only show filtered drops instead to hide the other names.</p>
                         <p><b>Only show filtered drops</b> hides every other drop name. <b>Dim other drops</b> shows them at half strength instead. Both do nothing while all lists are empty.</p>
-                        <p><b>Saved lists</b> are the lists and profiles in loot_filter.txt and loot_filter_profiles.txt (ROSE Online folder). The game loads them when it starts: they glow at no cost, and switching between saved profiles, Dim, Only filtered and the name size is instant and runs nothing in the background.</p>
+                        <p><b>Saved lists</b> are the lists and profiles you save in Arua Companion (Arua Companion in the ROSE Online folder). The game loads them when it starts: they glow at no cost, and switching between saved profiles, Dim, Only filtered and the name size is instant and runs nothing in the background.</p>
                         <p><b>Live changes:</b> anything you change here (a new name, Save, Save as profile) works at once, but only for this game session. While such a changed list is in use, a small timer marks the matching drops on screen. It stops when you click a saved profile again or restart the game.</p>
-                        <p class="lf-warn">To keep a change: put the names in loot_filter.txt (or a profile in loot_filter_profiles.txt), run Arua Loot Filter.bat in the ROSE Online folder and restart the game. From then on they are saved lists again: no timer.</p>
+                        <p class="lf-warn">To keep a change: add the names in Arua Companion, press Save there and restart the game (or press Ctrl+F5). From then on they are saved lists again: no timer.</p>
                         <p><b>Clear all</b> empties the boxes; press Save to use the empty lists for this session.</p>
                     </div>
                 </div>

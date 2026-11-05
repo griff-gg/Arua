@@ -1,4 +1,4 @@
--- ARUA-LF-DATA-BEGIN (written by "Arua Loot Filter.bat" from loot_filter.txt; do not edit by hand)
+-- ARUA-LF-DATA-BEGIN (written by Arua Companion; do not edit by hand)
 local LF_DATA = {
     lists = { only_filtered = false, dim_others = true, name_size = 1, yellow = 'Pink Powder, Knight\039s Sword', blue = 'Salt \038 Pepper \060Rare>', purple = '\195\137p\195\169e Longue', red = '', green = 'Golden Feather', rainbow = '' },
     profiles = {

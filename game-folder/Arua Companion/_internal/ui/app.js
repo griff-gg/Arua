@@ -22,10 +22,12 @@ function setStatus(text, kind) {
   s.className = 'status' + (kind ? ' ' + kind : '');
 }
 
-// lists: editing them also updates the selected profile, like Save in the game's Loot Filter tab
-function syncProfile() {
-  const p = state.profiles.items.find((x) => x.name === state.profiles.active);
-  if (p) COLORS.forEach((c) => { p.lists[c] = state.lists[c]; });
+// lists are a working copy: profiles only change through New / Save changes / Delete
+const activeProfile = () => state.profiles.items.find((x) => x.name === state.profiles.active);
+const listsOf = () => Object.fromEntries(COLORS.map((c) => [c, state.lists[c] || '']));
+function changed() {
+  const p = activeProfile();
+  return !!p && COLORS.some((c) => join(split(p.lists[c])) !== join(split(state.lists[c])));
 }
 
 function addName(name, color) {
@@ -37,23 +39,22 @@ function addName(name, color) {
   }
   COLORS.forEach((c) => { state.lists[c] = join(split(state.lists[c]).filter((n) => n !== name)); });
   state.lists[color] = join(split(state.lists[color]).concat([name]));
-  syncProfile();
   renderLists();
-  setStatus(`Added ${name} to ${LABEL[color]}. Press Save to keep it.`);
+  setStatus(`Added ${name} to ${LABEL[color]}. Press Save to use it in game.`);
 }
 
 function removeName(name, color) {
   state.lists[color] = join(split(state.lists[color]).filter((n) => n !== name));
-  syncProfile();
   renderLists();
-  setStatus('Removed. Press Save to keep it.');
+  setStatus('Removed. Press Save to use it in game.');
 }
 
 function renderLists() {
   const box = $('lists');
   box.replaceChildren();
   $('lists-of').textContent = state.profiles.active
-    ? `(profile ${state.profiles.active}; rarer colour wins, × removes)` : '(rarer colour wins, × removes)';
+    ? `(profile ${state.profiles.active}${changed() ? ', changed: Save changes to keep it in the profile' : ''})`
+    : '(no profile selected; rarer colour wins, × removes)';
   COLORS.forEach((c) => {
     const row = el('div', 'list');
     row.append(el('span', 'lname ' + c, LABEL[c]));
@@ -108,11 +109,12 @@ function renderProfiles() {
   state.profiles.items.forEach((p) => {
     const b = el('button', 'ppill' + (p.name === state.profiles.active ? ' on' : ''), p.name);
     b.onclick = () => {
+      const dropped = changed() ? ` (unsaved changes to ${state.profiles.active} were dropped)` : '';
       state.profiles.active = p.name;
       COLORS.forEach((c) => { state.lists[c] = p.lists[c] || ''; });
       renderProfiles();
       renderLists();
-      setStatus(`Profile ${p.name} selected. Press Save to keep it.`);
+      setStatus(`Profile ${p.name} loaded${dropped}. Press Save to use it in game.`);
     };
     box.append(b);
   });
@@ -191,16 +193,24 @@ function wire() {
   $('minimap').oninput = (e) => { state.settings.minimap_size = Number(e.target.value); $('minimap-v').textContent = e.target.value; };
   $('profile-new').onclick = () => {
     const name = $('profile-name').value.replace(/[\[\]=<>&"\r\n]/g, '').trim().slice(0, 20);
-    if (!name) { setStatus('Type a profile name first.', 'bad'); return; }
-    const lists = {};
-    COLORS.forEach((c) => { lists[c] = state.lists[c]; });
-    const old = state.profiles.items.find((p) => p.name === name);
-    if (old) old.lists = lists; else state.profiles.items.push({ name, lists });
+    if (!name) { setStatus('Type a name for the new profile first.', 'bad'); return; }
+    if (state.profiles.items.some((p) => p.name === name)) {
+      setStatus(`There is already a profile ${name}. Click it and use Save changes, or pick another name.`, 'bad');
+      return;
+    }
+    state.profiles.items.push({ name, lists: listsOf() });
     state.profiles.active = name;
     $('profile-name').value = '';
     renderProfiles();
     renderLists();
-    setStatus(`Profile ${name} saved in the list. Press Save to keep it.`);
+    setStatus(`New profile ${name} made from the lists. Press Save to keep it.`);
+  };
+  $('profile-save').onclick = () => {
+    const p = activeProfile();
+    if (!p) { setStatus('Click a profile first, or make a new one.', 'bad'); return; }
+    p.lists = listsOf();
+    renderLists();
+    setStatus(`Profile ${p.name} updated. Press Save to keep it.`);
   };
   $('profile-del').onclick = () => {
     const name = state.profiles.active;

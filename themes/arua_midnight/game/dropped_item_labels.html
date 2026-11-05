@@ -173,7 +173,7 @@ function LF.load_profiles()
     return list, by, active
 end
 
--- ARUA-LF-DATA-BEGIN (written by "Arua Loot Filter.bat" from loot_filter.txt; do not edit by hand)
+-- ARUA-LF-DATA-BEGIN (written by Arua Companion; do not edit by hand)
 local LF_DATA = nil
 -- ARUA-LF-DATA-END
 if LF_DATA then
@@ -309,7 +309,7 @@ pcall(function()
     end
     f:close()
 end)
--- rule sets written by the helper (the rules file itself can no longer be read)
+-- rule sets written by Arua Companion (the rules file itself can no longer be read)
 if LF_DATA then
     loaded['lfp-none'] = true
     for _, p in ipairs(LF_DATA.profiles) do loaded[LF.pclass(p.name)] = true end
