@@ -2,7 +2,7 @@
 # Run from anywhere: powershell -NoProfile -ExecutionPolicy Bypass -File companion\build_exe.ps1
 $ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot
-python -m PyInstaller --noconfirm --clean --onedir --windowed --name "Arua Companion" `
+python -m PyInstaller --noconfirm --clean --onedir --windowed --name "Arua Companion" --icon "ui\arua.ico" `
     --add-data "ui;ui" --collect-submodules webview --exclude-module cryptography run_companion.py
 if ($LASTEXITCODE -ne 0) { throw 'PyInstaller failed' }
 Copy-Item "data\items.json" "dist\Arua Companion\items.json" -Force

@@ -26,6 +26,9 @@ OutputBaseFilename=Arua-{#AppVer}-Setup
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
+SetupIconFile=..\companion\ui\arua.ico
+WizardImageFile=wizard.bmp
+WizardSmallImageFile=wizard_small.bmp
 UninstallDisplayName=Arua {#AppVer} (ROSE Online theme)
 UninstallDisplayIcon={app}\Arua Companion\Arua Companion.exe
 
