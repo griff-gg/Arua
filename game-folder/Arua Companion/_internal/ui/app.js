@@ -159,6 +159,42 @@ function renderGroup() {
   seg('bars', s.party_bars, (v) => { s.party_bars = v; });
 }
 
+function renderThemes(list) {
+  if (list) state.theme_list = list;
+  const box = $('theme-list');
+  box.replaceChildren();
+  state.theme_list.forEach((t) => {
+    const row = el('div', 'theme-row');
+    row.append(el('span', 'tname', t.label), el('span', 'tstate' + (t.installed ? ' on' : ''), t.installed ? 'Installed' : 'Not installed'));
+    const b = el('button', 'pill small' + (t.installed ? ' danger' : ''), t.installed ? 'Remove' : 'Add');
+    b.onclick = async () => {
+      document.querySelectorAll('.theme-row .pill').forEach((x) => { x.disabled = true; });
+      setStatus(t.installed ? `Removing ${t.label}…` : `Downloading ${t.label}…`);
+      const r = t.installed ? await api.remove_theme(t.name) : await api.install_theme(t.name);
+      setStatus(r.message, r.ok ? 'ok' : 'bad');
+      renderThemes(r.theme_list);
+    };
+    row.append(b);
+    box.append(row);
+  });
+  $('version').textContent = 'Arua ' + state.version;
+}
+
+function showUpdate(u) {
+  const b = $('update');
+  b.hidden = !u.available;
+  if (u.available) {
+    b.textContent = 'Update ' + u.version;
+    $('update-info').textContent = `Arua ${u.version} is out. Click the gold Update button at the top to install it.`;
+  }
+  return u;
+}
+
+async function checkUpdate(loud) {
+  const u = showUpdate(await api.check_update());
+  if (loud) setStatus(u.available ? `Arua ${u.version} is out: press Update at the top.` : `You have the newest Arua (${state.version}).`, 'ok');
+}
+
 function renderAll() {
   renderLists();
   renderProfiles();
@@ -167,6 +203,7 @@ function renderAll() {
   seg('size', state.lists.name_size, (v) => { state.lists.name_size = Number(v); });
   renderLook();
   renderGroup();
+  renderThemes();
   $('items-info').textContent = state.items_patch ? `Item list from the game patch of ${state.items_patch}.` : 'No item list found.';
   if (!state.themes.length) setStatus('No Arua theme found in data\\ui\\themes. Install Arua first.', 'bad');
 }
@@ -185,6 +222,13 @@ function wire() {
     if (!e.target.closest('.box.search')) $('results').hidden = true;
   });
   $('close').onclick = () => api.close();
+  $('check-update').onclick = () => { setStatus('Checking…'); checkUpdate(true); };
+  $('update').onclick = async () => {
+    setStatus('Downloading the new Arua setup… Windows will ask for permission, the Companion closes and opens again when done.');
+    $('update').disabled = true;
+    const r = await api.start_update();
+    if (!r.ok) { $('update').disabled = false; setStatus(r.message, 'bad'); }
+  };
   $('only').onchange = (e) => { state.lists.only_filtered = e.target.checked; };
   $('dim').onchange = (e) => { state.lists.dim_others = e.target.checked; };
   $('drop-box').onchange = (e) => { state.settings.drop_box = e.target.checked; renderPreview(); };
@@ -241,4 +285,7 @@ window.addEventListener('pywebviewready', async () => {
   state = await api.get_state();
   wire();
   renderAll();
+  const s = await api.startup();
+  if (s.message) setStatus(s.message, s.applied ? 'ok' : 'bad');
+  checkUpdate(false);
 });

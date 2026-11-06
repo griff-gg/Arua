@@ -12,7 +12,9 @@ AppId={{6F3B2A71-5C0E-4E3B-9A57-2D8C4F1E0A93}
 AppName=Arua
 AppVersion={#AppVer}
 AppVerName=Arua {#AppVer}
-AppPublisher=griff_gg
+AppPublisher=Griff inc.
+VersionInfoCompany=Griff inc.
+VersionInfoVersion={#AppVer}
 AppPublisherURL=https://github.com/griff-gg/Arua
 DefaultDirName={code:DefaultRoseDir}
 AppendDefaultDirName=no
@@ -36,12 +38,22 @@ UninstallDisplayIcon={app}\Arua Companion\Arua Companion.exe
 SelectDirLabel3=Pick your ROSE Online folder: the one with trose.exe in it.
 SelectDirBrowseLabel=Setup found the folder below. If ROSE Online is somewhere else, click Browse.
 
+[Types]
+Name: full; Description: "Arua Companion and all three themes"
+Name: custom; Description: "Pick the themes"; Flags: iscustom
+
+[Components]
+Name: companion; Description: "Arua Companion (settings, theme install, updates)"; Types: full custom; Flags: fixed
+Name: ice; Description: "Arua Ice (light ice blue and gold)"; Types: full
+Name: dark; Description: "Arua Dark (navy and gold)"; Types: full
+Name: midnight; Description: "Arua Midnight (graphite and silver)"; Types: full
+
 [Tasks]
 Name: desktopicon; Description: "Desktop shortcut for the Arua Companion"
 Name: removerose; Description: "Remove the old Arua files in data\ui\themes\rose (left by Arua before 3 November 2026; they break the default theme)"; Check: OldRoseFolderExists
 
 [InstallDelete]
-; Fresh copy on update: no stale files from an older version.
+; Fresh copy on update (no stale files); a theme left unticked is removed.
 Type: filesandordirs; Name: "{app}\data\ui\themes\arua_ice"
 Type: filesandordirs; Name: "{app}\data\ui\themes\arua_dark"
 Type: filesandordirs; Name: "{app}\data\ui\themes\arua_midnight"
@@ -52,7 +64,9 @@ Type: files; Name: "{app}\Arua Loot Filter.bat"
 Type: files; Name: "{app}\arua_loot_filter.ps1"
 
 [Files]
-Source: "..\themes\*"; DestDir: "{app}\data\ui\themes"; Flags: recursesubdirs createallsubdirs ignoreversion
+Source: "..\themes\arua_ice\*"; DestDir: "{app}\data\ui\themes\arua_ice"; Components: ice; Flags: recursesubdirs createallsubdirs ignoreversion
+Source: "..\themes\arua_dark\*"; DestDir: "{app}\data\ui\themes\arua_dark"; Components: dark; Flags: recursesubdirs createallsubdirs ignoreversion
+Source: "..\themes\arua_midnight\*"; DestDir: "{app}\data\ui\themes\arua_midnight"; Components: midnight; Flags: recursesubdirs createallsubdirs ignoreversion
 Source: "..\game-folder\Arua Companion\*"; DestDir: "{app}\Arua Companion"; Flags: recursesubdirs createallsubdirs ignoreversion
 
 [Icons]
@@ -61,7 +75,9 @@ Name: "{group}\Uninstall Arua"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\Arua Companion"; Filename: "{app}\Arua Companion\Arua Companion.exe"; WorkingDir: "{app}\Arua Companion"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\Arua Companion\Arua Companion.exe"; Description: "Open the Arua Companion now (press Save once to apply your lists and settings)"; Flags: postinstall nowait skipifsilent runasoriginaluser
+Filename: "{app}\Arua Companion\Arua Companion.exe"; Description: "Open the Arua Companion now"; Flags: postinstall nowait skipifsilent runasoriginaluser
+; quiet update started from the Companion (/RELAUNCH): open it again when done
+Filename: "{app}\Arua Companion\Arua Companion.exe"; Flags: nowait runasoriginaluser; Check: IsRelaunch
 
 [UninstallDelete]
 ; Files the Companion changed or added inside the Arua folders. Your loot lists, settings and
@@ -112,6 +128,26 @@ begin
       'SELECT ProcessId FROM Win32_Process WHERE Name = ''trose.exe''');
     Result := Procs.Count > 0;
   except
+  end;
+end;
+
+function IsRelaunch: Boolean;
+begin
+  Result := Pos('/RELAUNCH', Uppercase(GetCmdTail)) > 0;
+end;
+
+procedure CurPageChanged(CurPageID: Integer);
+var
+  Themes: String;
+begin
+  { a theme added later from the Companion stays ticked on an update. Not in silent mode: there
+    /COMPONENTS (from the Companion's Update button) decides. }
+  if (CurPageID = wpSelectComponents) and not WizardSilent then
+  begin
+    Themes := AddBackslash(WizardDirValue) + 'data\ui\themes\';
+    if DirExists(Themes + 'arua_ice') then WizardSelectComponents('ice');
+    if DirExists(Themes + 'arua_dark') then WizardSelectComponents('dark');
+    if DirExists(Themes + 'arua_midnight') then WizardSelectComponents('midnight');
   end;
 end;
 

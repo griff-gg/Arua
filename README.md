@@ -14,17 +14,19 @@ Made by **griff_gg**. Built for the ROSE Online patch of **3 November 2026**.
    [latest release](https://github.com/griff-gg/Arua/releases/latest) and run it. Windows may show
    "Windows protected your PC" because the app is not signed: click **More info** > **Run anyway**.
 3. Setup finds your ROSE Online folder (the one with `trose.exe`; pick it with Browse if it is
-   somewhere else) and installs the three themes and the **Arua Companion**, with a Start menu
-   shortcut. Updating? Just run the new setup: it replaces the old version and keeps your loot lists
-   and settings. It also offers to remove the old `data\ui\themes\rose` folder left by Arua before
-   3 November 2026, which breaks the default theme.
-4. At the end, open the Companion and press **Save** once: it writes your lists and settings into the
-   new theme files.
+   somewhere else). Tick the themes you want (all three by default); the **Arua Companion** is always
+   installed, with a Start menu shortcut. It also offers to remove the old `data\ui\themes\rose`
+   folder left by Arua before 3 November 2026, which breaks the default theme.
+4. At the end, open the Companion. It puts your lists and settings into the themes by itself.
 5. Start the game, open **Options > Interface > Theme** and pick **Arua Ice**, **Arua Dark** or
    **Arua Midnight**.
 
 The game remembers the theme. To go back to the original look, pick **ROSE**. To remove Arua, pick
 **ROSE** in game first, then uninstall **Arua** in Windows Settings > Apps.
+
+**Updates:** when a new Arua version is out, the Companion shows a gold **Update** button at the top.
+Close the game, click it, allow Windows' permission prompt: the new version installs and the Companion
+opens again with your lists and settings already applied.
 
 ## Arua Companion
 
@@ -40,6 +42,8 @@ to reload the UI.
 - **Markers & drops**: target marker colour (red / blue / green); drop names that are not in your lists:
   dark box behind the name, black outline, opacity 100 / 75 / 50 %.
 - **Group & minimap**: buff rows, columns, class icons, minimap size, Party Bars (normal / faded).
+- **Themes**: add or remove Arua Ice / Dark / Midnight (adding downloads it from this repository's
+  release for your version), your installed version and **Check for updates**.
 
 It writes into every installed Arua theme and keeps a copy of each file it changes in
 `ROSE Online\arua_companion_backup\`. The first time, Windows may ask for permission to write into the
@@ -58,8 +62,8 @@ Purple, Red, Green and Rainbow (the rarer colour wins if a name is in two lists)
   that session. To keep them, add them in the Companion and press Save.
 - Saved lists cost nothing while you play. Names you add in game for the session use a small timer
   that marks matching drops; it stops when you switch back to a saved profile or restart.
-- After installing a new Arua version, open the Companion and press **Save** once: it writes your lists
-  and settings into the new theme files.
+- After installing or updating Arua, the Companion writes your lists and settings into the new theme
+  files the first time it opens.
 
 ## What's in it
 

@@ -16,6 +16,7 @@
     <div class="n bl"></div><div class="n b"></div><div class="n br"></div>
   </div>
   <div class="titlebar pywebview-drag-region"><span class="title">Arua Companion</span></div>
+  <button class="update" id="update" hidden title="A new Arua version is out: click to install it"></button>
   <button class="close" id="close" title="Close"></button>
 
   <div class="content">
@@ -29,6 +30,7 @@
         <button class="tab sel" data-tab="loot">Loot filter</button>
         <button class="tab" data-tab="look">Markers &amp; drops</button>
         <button class="tab" data-tab="group">Group &amp; minimap</button>
+        <button class="tab" data-tab="themes">Themes</button>
       </nav>
 
       <section id="tab-loot" class="page loot">
@@ -107,6 +109,21 @@
         <div class="box">
           <h3>Party bars <span class="hint">(HP / MP bars over group members' heads)</span></h3>
           <div class="seg" id="bars"><button data-v="normal">Normal</button><button data-v="faded">Faded (25%)</button></div>
+        </div>
+      </section>
+
+      <section id="tab-themes" class="page" hidden>
+        <div class="box">
+          <h3>Arua themes <span class="hint">(pick one in game: Options &gt; Interface &gt; Theme)</span></h3>
+          <div id="theme-list"></div>
+          <div class="hint">Adding downloads the theme for your Arua version from GitHub. Your lists and settings are put in
+            automatically. Remove a theme only after picking another one in game.</div>
+        </div>
+        <div class="box">
+          <h3>Updates</h3>
+          <div class="row"><span class="label">Installed</span><span class="value" id="version"></span>
+            <button id="check-update" class="pill small">Check for updates</button></div>
+          <div class="hint" id="update-info">The Companion checks for a new Arua version each time it opens.</div>
         </div>
       </section>
 

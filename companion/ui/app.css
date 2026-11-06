@@ -7,6 +7,7 @@
   --red: rgb(255, 96, 96); --green: rgb(120, 235, 120);
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }   /* pages with their own display (the loot grid) must still hide */
 /* see-through page: only the Arua frame shows, the margin leaves room for the flourishes */
 html, body { margin: 0; height: 100%; background: transparent; font-family: Nunito, 'Segoe UI', sans-serif;
   color: var(--text); font-size: 14px; overflow: hidden; user-select: none; }
@@ -160,3 +161,24 @@ button.card:hover { border-color: var(--gold); }
 button.card.sel { background: rgb(255, 238, 190); border: 2px solid var(--gold); color: var(--brown); }
 button.card .flip { margin: 0; }
 button.card span { flex-basis: 100%; text-align: center; }
+
+/* update badge: gold pill left of the close button, gently pulsing */
+.update { position: absolute; top: 6px; right: 40px; height: 26px; padding: 0 12px 0 10px; z-index: 20; cursor: pointer;
+  border: 0; color: var(--gold-text); font-weight: 820; font-size: 13px; display: flex; align-items: center; gap: 6px;
+  background: url(art/tab-sel-l.png) left / 8px 26px no-repeat, url(art/tab-sel-r.png) right / 8px 26px no-repeat,
+              url(art/tab-sel-c.png) center / calc(100% - 16px) 26px no-repeat;
+  animation: pulse 1.6s ease-in-out infinite; }
+.update[hidden] { display: none; }
+.update::before { content: ''; width: 0; height: 0; border: 5px solid transparent; border-bottom: 7px solid var(--gold-text);
+  margin-top: -6px; }
+.update:hover { filter: brightness(1.08); }
+@keyframes pulse { 50% { filter: drop-shadow(0 0 4px rgb(255, 226, 84)); } }
+
+/* themes tab */
+.theme-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--box-edge); }
+.theme-row:last-child { border-bottom: 0; }
+.theme-row .tname { flex: 1; color: var(--navy); font-weight: 820; }
+.theme-row .tstate { min-width: 110px; font-weight: 700; color: var(--muted); }
+.theme-row .tstate.on { color: rgb(40, 140, 60); }
+.theme-row .pill { min-width: 90px; }
+#theme-list { margin-bottom: 6px; }
