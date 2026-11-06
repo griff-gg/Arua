@@ -5,3 +5,4 @@ companion/build/
 companion/dist/
 companion/*.spec
 .superpowers/
+installer/Output/

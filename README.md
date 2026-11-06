@@ -10,24 +10,26 @@ Made by **griff_gg**. Built for the ROSE Online patch of **3 November 2026**.
 ## Install
 
 1. Close the game.
-2. Used an older Arua (before the 3 November 2026 patch)? Delete the folder
-   `ROSE Online\data\ui\themes\rose` if it exists. Older Arua versions put their files there; with
-   them in place the default theme breaks after the patch.
-3. Copy the three folders from `themes\` into `ROSE Online\data\ui\themes\`:
-   `arua_ice`, `arua_dark`, `arua_midnight`.
-4. Copy the `Arua Companion` folder from `game-folder\` into the `ROSE Online` folder itself (the one
-   with `trose.exe`). Updating from 0.1.0? You can delete `Arua Loot Filter.bat` and
-   `arua_loot_filter.ps1` there: the Companion replaces them.
+2. Download **Arua-<version>-Setup.exe** from the
+   [latest release](https://github.com/griff-gg/Arua/releases/latest) and run it. Windows may show
+   "Windows protected your PC" because the app is not signed: click **More info** > **Run anyway**.
+3. Setup finds your ROSE Online folder (the one with `trose.exe`; pick it with Browse if it is
+   somewhere else) and installs the three themes and the **Arua Companion**, with a Start menu
+   shortcut. Updating? Just run the new setup: it replaces the old version and keeps your loot lists
+   and settings. It also offers to remove the old `data\ui\themes\rose` folder left by Arua before
+   3 November 2026, which breaks the default theme.
+4. At the end, open the Companion and press **Save** once: it writes your lists and settings into the
+   new theme files.
 5. Start the game, open **Options > Interface > Theme** and pick **Arua Ice**, **Arua Dark** or
    **Arua Midnight**.
 
-The game remembers the theme. To go back to the original look, pick **ROSE**.
+The game remembers the theme. To go back to the original look, pick **ROSE**. To remove Arua, pick
+**ROSE** in game first, then uninstall **Arua** in Windows Settings > Apps.
 
 ## Arua Companion
 
 Since the 3 November 2026 patch the game's UI can no longer save settings, so Arua has a small
-settings app: **ROSE Online\Arua Companion\Arua Companion.exe** (tip: right-click it > Pin to taskbar, or
-make a desktop shortcut). Open it (outside the game or while it runs), change what you like and press
+settings app: **Arua Companion** in the Start menu (installed in `ROSE Online\Arua Companion`). Open it (outside the game or while it runs), change what you like and press
 **Save**. Then restart the game, or press **Ctrl+F5** in game
 to reload the UI.
 

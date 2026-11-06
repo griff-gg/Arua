@@ -1,5 +1,14 @@
 # Arua changelog
 
+## 0.2.1 – 2026-11-06
+
+- New: **Arua-0.2.1-Setup.exe** installs everything: finds the ROSE Online folder, installs the three
+  themes and the Arua Companion, adds a Start menu shortcut, and can be uninstalled from Windows
+  Settings > Apps. Updating = running the new setup (your loot lists and settings are kept).
+- Fixed: the Companion did not open after extracting the release zip with Windows Explorer
+  ("Failed to resolve Python.Runtime.Loader.Initialize"). Windows blocked the downloaded files; the
+  Companion now unblocks its own files when it starts.
+
 ## 0.2.0 – 2026-11-05
 
 - New: **Arua Companion**, a settings app in the ROSE Online folder (`Arua Companion\Arua Companion.exe`):
