@@ -1,6 +1,6 @@
 """Builds the Arua icon -> companion/ui/arua.ico (+ installer wizard images).
 
-Big sizes (48 px and up) are the Arua logo (art/arua_logo.png). Small sizes (16-32 px) are the
+Big sizes (48 px and up) are the Arua logo (art/arua_logo.png, kept outside the repo). Small sizes (16-32 px) are the
 logo's compass redrawn simply, so they stay sharp in the taskbar.
     python companion/tools/make_icon.py [preview.png]"""
 import math
