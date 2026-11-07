@@ -14,6 +14,9 @@
 - Fixed: the Companion did not open after extracting the release zip with Windows Explorer
   ("Failed to resolve Python.Runtime.Loader.Initialize"). Windows blocked the downloaded files; the
   Companion now unblocks its own files when it starts.
+- Known issue (game client, not Arua): drop names and loot beams can blink or appear late while a dropped
+  item is still falling. It happens with any theme in `data\ui\themes`, also an unchanged copy of the
+  default theme.
 
 ## 0.2.0 – 2026-11-05
 

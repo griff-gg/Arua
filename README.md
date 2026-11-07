@@ -88,6 +88,12 @@ itself:
 - Loot filter lists are saved with the Companion (see above), not from the Options window.
 - The element icon and DPS meter on the target bar are always on.
 
+## Drop names blink while the item falls
+
+Right after an item drops, its name (and loot beam) can blink or show up late until the item lands.
+This happens with every theme in `data\ui\themes`, also an unchanged copy of the default ROSE theme,
+so it is the game client, not Arua. The built-in ROSE theme does not show it.
+
 ## Crash when closing the game
 
 The game can crash when you close it if it **started** with a custom theme selected (any theme in
